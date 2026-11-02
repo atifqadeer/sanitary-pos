@@ -1,0 +1,154 @@
+<UserControl x:Class="SanitaryPOS.Views.ProductsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="360"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ===== Left: search + list + quick price ===== -->
+        <Grid Grid.Column="0" Margin="0,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{DynamicResource Products}" Style="{StaticResource HeaderText}"/>
+
+            <TextBox Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource FormTextBox}" FontSize="15"
+                     ToolTip="{DynamicResource SearchHint}"/>
+
+            <DataGrid Grid.Row="2" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}"
+                      AutoGenerateColumns="False" IsReadOnly="True" FontSize="13"
+                      CanUserAddRows="False" SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{DynamicResource Name}" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="{DynamicResource Brand}" Binding="{Binding BrandName}" Width="90"/>
+                    <DataGridTextColumn Header="{DynamicResource StockQty}" Binding="{Binding StockQty}" Width="60"/>
+                    <!-- Purchase column is hidden in code-behind for Cashier logins. -->
+                    <DataGridTextColumn x:Name="PurchaseColumn" Header="{DynamicResource PurchaseRate}"
+                                        Binding="{Binding PurchaseRatePaisa, Converter={StaticResource MoneyConverter}}" Width="95"/>
+                    <DataGridTextColumn Header="{DynamicResource RetailRate}"
+                                        Binding="{Binding RetailRatePaisa, Converter={StaticResource MoneyConverter}}" Width="95"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,6,0,0">
+                <TextBlock Text="{DynamicResource QuickPriceUpdate}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBox Text="{Binding QuickPriceText}" Width="110" Style="{StaticResource FormTextBox}"/>
+                <Button Content="{DynamicResource Save}" Style="{StaticResource BigButton}"
+                        Command="{Binding QuickPriceCommand}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ===== Right: add / edit form ===== -->
+        <Border Grid.Column="1" Background="White" BorderBrush="#DDD" BorderThickness="1" Padding="12">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Button Content="{DynamicResource AddNew}" Style="{StaticResource BigButton}"
+                            Command="{Binding NewFormCommand}"/>
+
+                    <TextBlock Text="{DynamicResource Name}" Style="{StaticResource FormLabel}"/>
+                    <TextBox Text="{Binding FormName}" Style="{StaticResource FormTextBox}"/>
+
+                    <TextBlock Text="{DynamicResource Brand}" Style="{StaticResource FormLabel}"/>
+                    <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding FormBrand}"
+                              Style="{StaticResource FormCombo}" IsEditable="False"/>
+
+                    <TextBlock Text="{DynamicResource NewBrandHint}" Style="{StaticResource FormLabel}"/>
+                    <TextBox Text="{Binding FormNewBrand}" Style="{StaticResource FormTextBox}"/>
+
+                    <TextBlock Text="{DynamicResource Category}" Style="{StaticResource FormLabel}"/>
+                    <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding FormCategory}"
+                              Style="{StaticResource FormCombo}"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                            <TextBlock Text="{DynamicResource ModelCode}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormModelCode}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="4,0,0,0">
+                            <TextBlock Text="{DynamicResource Barcode}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormBarcode}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                            <TextBlock Text="{DynamicResource Finish}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormFinish}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="4,0,0,0">
+                            <TextBlock Text="{DynamicResource Size}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormSize}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="{DynamicResource Unit}" Style="{StaticResource FormLabel}"/>
+                    <ComboBox ItemsSource="{Binding Units}" SelectedItem="{Binding FormUnit}"
+                              Style="{StaticResource FormCombo}"/>
+
+                    <!-- Purchase rate field: hidden in code-behind for Cashier logins. -->
+                    <StackPanel x:Name="PurchaseRatePanel">
+                        <TextBlock Text="{DynamicResource PurchaseRate}" Style="{StaticResource FormLabel}"/>
+                        <TextBox Text="{Binding FormPurchaseText}" Style="{StaticResource FormTextBox}"/>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                            <TextBlock Text="{DynamicResource RetailRate}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormRetailText}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="4,0,0,0">
+                            <TextBlock Text="{DynamicResource TradeRate}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormTradeText}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                            <TextBlock Text="{DynamicResource WholesaleRate}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormWholesaleText}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="4,0,0,0">
+                            <TextBlock Text="{DynamicResource LowStockLevel}" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding FormLowStockText}" Style="{StaticResource FormTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="{DynamicResource Location}" Style="{StaticResource FormLabel}"/>
+                    <ComboBox ItemsSource="{Binding Locations}" SelectedItem="{Binding FormLocation}"
+                              Style="{StaticResource FormCombo}"/>
+
+                    <TextBlock Text="{DynamicResource OpeningStock}" Style="{StaticResource FormLabel}"/>
+                    <TextBox Text="{Binding FormOpeningStockText}" Style="{StaticResource FormTextBox}"/>
+
+                    <CheckBox Content="{DynamicResource IsActive}" IsChecked="{Binding FormIsActive}" Margin="0,6"/>
+
+                    <Button Content="{DynamicResource Save}" Style="{StaticResource PrimaryButton}"
+                            Command="{Binding SaveProductCommand}" Height="42" Margin="0,8,0,0"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

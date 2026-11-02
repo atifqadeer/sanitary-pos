@@ -1,0 +1,197 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- ENGLISH strings. Every key here MUST also exist in Strings.ur.xaml.
+         Views use {DynamicResource Key} so a language swap updates the screen instantly. -->
+
+    <sys:String x:Key="AppTitle">Sanitary Store POS</sys:String>
+    <sys:String x:Key="English">English</sys:String>
+    <sys:String x:Key="Urdu">Urdu</sys:String>
+
+    <!-- Login / shell -->
+    <sys:String x:Key="Login">Login</sys:String>
+    <sys:String x:Key="Username">Username</sys:String>
+    <sys:String x:Key="Password">Password / PIN</sys:String>
+    <sys:String x:Key="LoginButton">Login</sys:String>
+    <sys:String x:Key="LoginFailed">Wrong username or password.</sys:String>
+    <sys:String x:Key="Logout">Logout</sys:String>
+    <sys:String x:Key="NavDashboard">Dashboard</sys:String>
+    <sys:String x:Key="NavBilling">Billing (POS)</sys:String>
+    <sys:String x:Key="NavQuotation">Quotation</sys:String>
+    <sys:String x:Key="NavProducts">Products / Stock</sys:String>
+    <sys:String x:Key="NavCustomers">Customers / Khata</sys:String>
+    <sys:String x:Key="NavPurchase">Purchase</sys:String>
+    <sys:String x:Key="NavSuppliers">Suppliers</sys:String>
+    <sys:String x:Key="NavReturns">Returns</sys:String>
+    <sys:String x:Key="NavReports">Reports</sys:String>
+    <sys:String x:Key="NavUsers">Users</sys:String>
+    <sys:String x:Key="NavSettings">Settings</sys:String>
+    <sys:String x:Key="Phase2">Phase 2</sys:String>
+    <sys:String x:Key="Phase3">Phase 3</sys:String>
+    <sys:String x:Key="ComingSoon">This screen is coming in the next phase.</sys:String>
+
+    <!-- Dashboard -->
+    <sys:String x:Key="Dashboard">Dashboard</sys:String>
+    <sys:String x:Key="TodaysSales">Today's Sales</sys:String>
+    <sys:String x:Key="TodaysBills">Today's Bills</sys:String>
+    <sys:String x:Key="TodaysProfit">Today's Profit (approx.)</sys:String>
+    <sys:String x:Key="TotalUdhaarReceivable">Total Udhaar Receivable</sys:String>
+    <sys:String x:Key="LowStockAlerts">Low Stock Items</sys:String>
+    <sys:String x:Key="Refresh">Refresh</sys:String>
+
+    <!-- Common -->
+    <sys:String x:Key="Search">Search</sys:String>
+    <sys:String x:Key="Save">Save</sys:String>
+    <sys:String x:Key="Cancel">Cancel</sys:String>
+    <sys:String x:Key="Edit">Edit</sys:String>
+    <sys:String x:Key="AddNew">Add New</sys:String>
+    <sys:String x:Key="Print">Print</sys:String>
+    <sys:String x:Key="Close">Close</sys:String>
+    <sys:String x:Key="Date">Date</sys:String>
+    <sys:String x:Key="Total">Total</sys:String>
+    <sys:String x:Key="Amount">Amount</sys:String>
+    <sys:String x:Key="Note">Note</sys:String>
+    <sys:String x:Key="Status">Status</sys:String>
+    <sys:String x:Key="Success">Success</sys:String>
+    <sys:String x:Key="Warning">Warning</sys:String>
+
+    <!-- Products -->
+    <sys:String x:Key="Products">Products</sys:String>
+    <sys:String x:Key="SearchHint">Type name, brand, model or barcode...</sys:String>
+    <sys:String x:Key="Name">Product Name (English)</sys:String>
+    <sys:String x:Key="Brand">Brand</sys:String>
+    <sys:String x:Key="Category">Category</sys:String>
+    <sys:String x:Key="ModelCode">Model / Code</sys:String>
+    <sys:String x:Key="Barcode">Barcode</sys:String>
+    <sys:String x:Key="Finish">Finish</sys:String>
+    <sys:String x:Key="Size">Size</sys:String>
+    <sys:String x:Key="Unit">Unit</sys:String>
+    <sys:String x:Key="PurchaseRate">Purchase Rate (Rs)</sys:String>
+    <sys:String x:Key="RetailRate">Retail Rate (Rs)</sys:String>
+    <sys:String x:Key="TradeRate">Trade Rate (Rs)</sys:String>
+    <sys:String x:Key="WholesaleRate">Wholesale Rate (Rs)</sys:String>
+    <sys:String x:Key="LowStockLevel">Low Stock Level</sys:String>
+    <sys:String x:Key="Location">Location</sys:String>
+    <sys:String x:Key="Shop">Shop</sys:String>
+    <sys:String x:Key="Godown">Godown</sys:String>
+    <sys:String x:Key="StockQty">Stock</sys:String>
+    <sys:String x:Key="OpeningStock">Opening Stock Qty (new product only)</sys:String>
+    <sys:String x:Key="IsActive">Active</sys:String>
+    <sys:String x:Key="ProductSaved">Product saved.</sys:String>
+    <sys:String x:Key="QuickPriceUpdate">Quick Price Update (Retail Rs)</sys:String>
+    <sys:String x:Key="NewBrandHint">New brand name (optional, creates brand)</sys:String>
+
+    <!-- Billing -->
+    <sys:String x:Key="Billing">Billing</sys:String>
+    <sys:String x:Key="Bill">Bill</sys:String>
+    <sys:String x:Key="BillNo">Bill No</sys:String>
+    <sys:String x:Key="ScanOrSearch">Scan barcode or type product name, then press Enter</sys:String>
+    <sys:String x:Key="Customer">Customer</sys:String>
+    <sys:String x:Key="WalkIn">Walk-in Customer</sys:String>
+    <sys:String x:Key="PriceLevel">Price Level</sys:String>
+    <sys:String x:Key="Retail">Retail</sys:String>
+    <sys:String x:Key="Trade">Trade</sys:String>
+    <sys:String x:Key="Wholesale">Wholesale</sys:String>
+    <sys:String x:Key="PaymentMethod">Payment Method</sys:String>
+    <sys:String x:Key="Cash">Cash</sys:String>
+    <sys:String x:Key="Card">Card</sys:String>
+    <sys:String x:Key="Bank">Bank Transfer</sys:String>
+    <sys:String x:Key="JazzCash">JazzCash</sys:String>
+    <sys:String x:Key="EasyPaisa">EasyPaisa</sys:String>
+    <sys:String x:Key="Credit">Credit / Udhaar</sys:String>
+    <sys:String x:Key="Mixed">Mixed</sys:String>
+    <sys:String x:Key="Item">Item</sys:String>
+    <sys:String x:Key="Qty">Qty</sys:String>
+    <sys:String x:Key="Rate">Rate (Rs)</sys:String>
+    <sys:String x:Key="DiscountRs">Discount (Rs)</sys:String>
+    <sys:String x:Key="DiscountPercent">Disc %</sys:String>
+    <sys:String x:Key="DiscountValue">Discount</sys:String>
+    <sys:String x:Key="LineTotal">Line Total</sys:String>
+    <sys:String x:Key="Remove">Remove</sys:String>
+    <sys:String x:Key="Subtotal">Subtotal</sys:String>
+    <sys:String x:Key="ItemDiscount">Item Discount</sys:String>
+    <sys:String x:Key="BillDiscount">Bill Discount (Rs)</sys:String>
+    <sys:String x:Key="Tax">Tax</sys:String>
+    <sys:String x:Key="GrandTotal">Grand Total</sys:String>
+    <sys:String x:Key="PaidAmount">Paid Amount (Rs)</sys:String>
+    <sys:String x:Key="Change">Change to Return</sys:String>
+    <sys:String x:Key="BalanceToKhata">Balance to Khata (Udhaar)</sys:String>
+    <sys:String x:Key="NewBill">New Bill (F2)</sys:String>
+    <sys:String x:Key="HoldBill">Hold Bill</sys:String>
+    <sys:String x:Key="HeldBills">Held Bills</sys:String>
+    <sys:String x:Key="RecallBill">Recall</sys:String>
+    <sys:String x:Key="SaveBill">Save Bill</sys:String>
+    <sys:String x:Key="SaveAndPrint">Save + Print (F9)</sys:String>
+    <sys:String x:Key="BillSavedMsg">Bill Saved — بل محفوظ ہو گیا</sys:String>
+    <sys:String x:Key="BillHeldMsg">Bill put on hold.</sys:String>
+    <sys:String x:Key="EmptyBillMsg">Add at least one item first.</sys:String>
+    <sys:String x:Key="CreditCustomerRequiredMsg">For Udhaar / part payment, please select a customer first (walk-in cannot take credit).</sys:String>
+    <sys:String x:Key="NoProductFoundMsg">No product found for this search / barcode.</sys:String>
+
+    <!-- Quotations -->
+    <sys:String x:Key="Quotations">Quotations</sys:String>
+    <sys:String x:Key="QuotationNo">Quotation No</sys:String>
+    <sys:String x:Key="NewQuotation">New Quotation</sys:String>
+    <sys:String x:Key="SaveQuotation">Save Quotation</sys:String>
+    <sys:String x:Key="QuotationSavedMsg">Quotation Saved — کوٹیشن محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="PrintQuotation">Print Quotation (A4)</sys:String>
+    <sys:String x:Key="ConvertToBill">Convert to Bill</sys:String>
+    <sys:String x:Key="ConvertedMsg">Quotation converted to a bill. Stock has been cut.</sys:String>
+    <sys:String x:Key="OpenStatus">Open</sys:String>
+    <sys:String x:Key="ConvertedStatus">Converted</sys:String>
+    <sys:String x:Key="GuestName">Customer Name (if not saved)</sys:String>
+    <sys:String x:Key="GuestMobile">Customer Mobile</sys:String>
+    <sys:String x:Key="ValidityNote">Rates valid for 7 days</sys:String>
+
+    <!-- Customers / Khata -->
+    <sys:String x:Key="Customers">Customers</sys:String>
+    <sys:String x:Key="CustomerKhata">Customer / Khata</sys:String>
+    <sys:String x:Key="AddCustomer">Add Customer</sys:String>
+    <sys:String x:Key="CustomerSaved">Customer saved.</sys:String>
+    <sys:String x:Key="CustomerName">Customer Name</sys:String>
+    <sys:String x:Key="CustomerType">Customer Type</sys:String>
+    <sys:String x:Key="Regular">Regular</sys:String>
+    <sys:String x:Key="Plumber">Plumber</sys:String>
+    <sys:String x:Key="Contractor">Contractor / Builder</sys:String>
+    <sys:String x:Key="WalkInType">Walk-in</sys:String>
+    <sys:String x:Key="Mobile">Mobile (03XX-XXXXXXX)</sys:String>
+    <sys:String x:Key="Address">Address</sys:String>
+    <sys:String x:Key="City">City</sys:String>
+    <sys:String x:Key="CreditLimit">Credit Limit (Rs, 0 = no limit)</sys:String>
+    <sys:String x:Key="OpeningBalance">Opening Balance / Old Udhaar (Rs)</sys:String>
+    <sys:String x:Key="CurrentBalance">Current Balance (Baqaya)</sys:String>
+    <sys:String x:Key="KhataLedger">Khata (Ledger)</sys:String>
+    <sys:String x:Key="Description">Description</sys:String>
+    <sys:String x:Key="Debit">Debit (Bill)</sys:String>
+    <sys:String x:Key="CreditCol">Credit (Payment)</sys:String>
+    <sys:String x:Key="ReceivePayment">Receive Payment (Wasooli)</sys:String>
+    <sys:String x:Key="PaymentAmount">Payment Amount (Rs)</sys:String>
+    <sys:String x:Key="PaymentSavedMsg">Payment Saved — وصولی محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="CreditLimitWarning">Warning: this customer is over the credit limit!</sys:String>
+    <sys:String x:Key="BalanceWord">Balance</sys:String>
+
+    <!-- Settings -->
+    <sys:String x:Key="Settings">Settings</sys:String>
+    <sys:String x:Key="ShopNameEn">Shop Name (English)</sys:String>
+    <sys:String x:Key="ShopNameUr">Shop Name (Urdu)</sys:String>
+    <sys:String x:Key="ShopAddress">Shop Address</sys:String>
+    <sys:String x:Key="Phone">Phone</sys:String>
+    <sys:String x:Key="WhatsApp">WhatsApp Number</sys:String>
+    <sys:String x:Key="TaxEnabled">Tax Enabled</sys:String>
+    <sys:String x:Key="TaxRatePercent">Tax Rate %</sys:String>
+    <sys:String x:Key="DefaultLanguage">Default Language (on start)</sys:String>
+    <sys:String x:Key="ReceiptPrinter">Receipt Printer Name</sys:String>
+    <sys:String x:Key="A4Printer">A4 Printer Name</sys:String>
+    <sys:String x:Key="BackupFolder">Backup Folder Path</sys:String>
+    <sys:String x:Key="BackupNow">Backup Now</sys:String>
+    <sys:String x:Key="BackupDoneMsg">Backup done.</sys:String>
+    <sys:String x:Key="SettingsSavedMsg">Settings saved.</sys:String>
+    <sys:String x:Key="ChangePasswordNote">First login is admin / admin123. Ask your developer to change it before live use (Users screen is Phase 3).</sys:String>
+
+    <!-- Printing (always bilingual in printouts, these are the English halves) -->
+    <sys:String x:Key="ReceiptTitle">SALES RECEIPT</sys:String>
+    <sys:String x:Key="QuotationTitle">QUOTATION / ESTIMATE</sys:String>
+    <sys:String x:Key="ReceiptThankYou">Thank you for your business!</sys:String>
+    <sys:String x:Key="Paid">Paid</sys:String>
+    <sys:String x:Key="Balance">Balance</sys:String>
+</ResourceDictionary>

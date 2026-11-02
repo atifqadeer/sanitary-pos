@@ -1,0 +1,198 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- URDU strings — simple, everyday Pakistani Urdu (user's glossary).
+         Every key here MUST also exist in Strings.en.xaml.
+         Product / brand names are NOT here: they always stay in English. -->
+
+    <sys:String x:Key="AppTitle">سینیٹری اسٹور پی او ایس</sys:String>
+    <sys:String x:Key="English">English</sys:String>
+    <sys:String x:Key="Urdu">اردو</sys:String>
+
+    <!-- Login / shell — لاگ ان -->
+    <sys:String x:Key="Login">لاگ ان</sys:String>
+    <sys:String x:Key="Username">صارف نام</sys:String>
+    <sys:String x:Key="Password">پاس ورڈ / پن</sys:String>
+    <sys:String x:Key="LoginButton">لاگ ان</sys:String>
+    <sys:String x:Key="LoginFailed">صارف نام یا پاس ورڈ غلط ہے۔</sys:String>
+    <sys:String x:Key="Logout">لاگ آؤٹ</sys:String>
+    <sys:String x:Key="NavDashboard">ڈیش بورڈ</sys:String>
+    <sys:String x:Key="NavBilling">بلنگ</sys:String>
+    <sys:String x:Key="NavQuotation">کوٹیشن</sys:String>
+    <sys:String x:Key="NavProducts">مصنوعات / اسٹاک</sys:String>
+    <sys:String x:Key="NavCustomers">گاہک / کھاتہ</sys:String>
+    <sys:String x:Key="NavPurchase">خریداری</sys:String>
+    <sys:String x:Key="NavSuppliers">سپلائر</sys:String>
+    <sys:String x:Key="NavReturns">واپسی</sys:String>
+    <sys:String x:Key="NavReports">رپورٹیں</sys:String>
+    <sys:String x:Key="NavUsers">صارفین</sys:String>
+    <sys:String x:Key="NavSettings">ترتیبات</sys:String>
+    <sys:String x:Key="Phase2">مرحلہ 2</sys:String>
+    <sys:String x:Key="Phase3">مرحلہ 3</sys:String>
+    <sys:String x:Key="ComingSoon">یہ اسکرین اگلے مرحلے میں آئے گی۔</sys:String>
+
+    <!-- Dashboard — ڈیش بورڈ -->
+    <sys:String x:Key="Dashboard">ڈیش بورڈ</sys:String>
+    <sys:String x:Key="TodaysSales">آج کی فروخت</sys:String>
+    <sys:String x:Key="TodaysBills">آج کے بل</sys:String>
+    <sys:String x:Key="TodaysProfit">آج کا منافع (تقریباً)</sys:String>
+    <sys:String x:Key="TotalUdhaarReceivable">کل وصول ہونے والا ادھار</sys:String>
+    <sys:String x:Key="LowStockAlerts">کم اسٹاک والی اشیاء</sys:String>
+    <sys:String x:Key="Refresh">تازہ کریں</sys:String>
+
+    <!-- Common — عام -->
+    <sys:String x:Key="Search">تلاش</sys:String>
+    <sys:String x:Key="Save">محفوظ کریں</sys:String>
+    <sys:String x:Key="Cancel">منسوخ</sys:String>
+    <sys:String x:Key="Edit">تبدیل کریں</sys:String>
+    <sys:String x:Key="AddNew">نیا شامل کریں</sys:String>
+    <sys:String x:Key="Print">پرنٹ</sys:String>
+    <sys:String x:Key="Close">بند کریں</sys:String>
+    <sys:String x:Key="Date">تاریخ</sys:String>
+    <sys:String x:Key="Total">کل</sys:String>
+    <sys:String x:Key="Amount">رقم</sys:String>
+    <sys:String x:Key="Note">نوٹ</sys:String>
+    <sys:String x:Key="Status">حالت</sys:String>
+    <sys:String x:Key="Success">کامیاب</sys:String>
+    <sys:String x:Key="Warning">خبردار</sys:String>
+
+    <!-- Products — مصنوعات -->
+    <sys:String x:Key="Products">مصنوعات</sys:String>
+    <sys:String x:Key="SearchHint">نام، برانڈ، ماڈل یا بارکوڈ لکھیں...</sys:String>
+    <sys:String x:Key="Name">مصنوعہ کا نام (انگریزی)</sys:String>
+    <sys:String x:Key="Brand">برانڈ</sys:String>
+    <sys:String x:Key="Category">قسم</sys:String>
+    <sys:String x:Key="ModelCode">ماڈل / کوڈ</sys:String>
+    <sys:String x:Key="Barcode">بارکوڈ</sys:String>
+    <sys:String x:Key="Finish">فنش</sys:String>
+    <sys:String x:Key="Size">سائز</sys:String>
+    <sys:String x:Key="Unit">اکائی</sys:String>
+    <sys:String x:Key="PurchaseRate">خرید قیمت (روپے)</sys:String>
+    <sys:String x:Key="RetailRate">پرچون قیمت (روپے)</sys:String>
+    <sys:String x:Key="TradeRate">کاریگر قیمت (روپے)</sys:String>
+    <sys:String x:Key="WholesaleRate">تھوک قیمت (روپے)</sys:String>
+    <sys:String x:Key="LowStockLevel">کم اسٹاک کی حد</sys:String>
+    <sys:String x:Key="Location">جگہ</sys:String>
+    <sys:String x:Key="Shop">دکان</sys:String>
+    <sys:String x:Key="Godown">گودام</sys:String>
+    <sys:String x:Key="StockQty">اسٹاک</sys:String>
+    <sys:String x:Key="OpeningStock">ابتدائی اسٹاک مقدار (صرف نئی مصنوعہ کے لیے)</sys:String>
+    <sys:String x:Key="IsActive">فعال</sys:String>
+    <sys:String x:Key="ProductSaved">مصنوعہ محفوظ ہو گئی۔</sys:String>
+    <sys:String x:Key="QuickPriceUpdate">فوری قیمت تبدیلی (پرچون روپے)</sys:String>
+    <sys:String x:Key="NewBrandHint">نیا برانڈ نام (اختیاری، برانڈ بن جائے گا)</sys:String>
+
+    <!-- Billing — بلنگ -->
+    <sys:String x:Key="Billing">بلنگ</sys:String>
+    <sys:String x:Key="Bill">بل</sys:String>
+    <sys:String x:Key="BillNo">بل نمبر</sys:String>
+    <sys:String x:Key="ScanOrSearch">بارکوڈ اسکین کریں یا مصنوعہ کا نام لکھ کر Enter دبائیں</sys:String>
+    <sys:String x:Key="Customer">گاہک</sys:String>
+    <sys:String x:Key="WalkIn">آنے والا گاہک</sys:String>
+    <sys:String x:Key="PriceLevel">قیمت کی قسم</sys:String>
+    <sys:String x:Key="Retail">پرچون</sys:String>
+    <sys:String x:Key="Trade">کاریگر</sys:String>
+    <sys:String x:Key="Wholesale">تھوک</sys:String>
+    <sys:String x:Key="PaymentMethod">ادائیگی کا طریقہ</sys:String>
+    <sys:String x:Key="Cash">نقد</sys:String>
+    <sys:String x:Key="Card">کارڈ</sys:String>
+    <sys:String x:Key="Bank">بینک ٹرانسفر</sys:String>
+    <sys:String x:Key="JazzCash">جاز کیش</sys:String>
+    <sys:String x:Key="EasyPaisa">ایزی پیسہ</sys:String>
+    <sys:String x:Key="Credit">ادھار</sys:String>
+    <sys:String x:Key="Mixed">ملا جلا</sys:String>
+    <sys:String x:Key="Item">آئٹم</sys:String>
+    <sys:String x:Key="Qty">مقدار</sys:String>
+    <sys:String x:Key="Rate">قیمت (روپے)</sys:String>
+    <sys:String x:Key="DiscountRs">رعایت (روپے)</sys:String>
+    <sys:String x:Key="DiscountPercent">رعایت فیصد</sys:String>
+    <sys:String x:Key="DiscountValue">رعایت</sys:String>
+    <sys:String x:Key="LineTotal">لائن کل</sys:String>
+    <sys:String x:Key="Remove">ہٹائیں</sys:String>
+    <sys:String x:Key="Subtotal">ذیلی کل</sys:String>
+    <sys:String x:Key="ItemDiscount">آئٹم رعایت</sys:String>
+    <sys:String x:Key="BillDiscount">بل رعایت (روپے)</sys:String>
+    <sys:String x:Key="Tax">ٹیکس</sys:String>
+    <sys:String x:Key="GrandTotal">کل رقم</sys:String>
+    <sys:String x:Key="PaidAmount">وصول رقم (روپے)</sys:String>
+    <sys:String x:Key="Change">واپس رقم</sys:String>
+    <sys:String x:Key="BalanceToKhata">بقایا کھاتے میں (ادھار)</sys:String>
+    <sys:String x:Key="NewBill">نیا بل (F2)</sys:String>
+    <sys:String x:Key="HoldBill">بل روکیں</sys:String>
+    <sys:String x:Key="HeldBills">روکے ہوئے بل</sys:String>
+    <sys:String x:Key="RecallBill">واپس لائیں</sys:String>
+    <sys:String x:Key="SaveBill">بل محفوظ کریں</sys:String>
+    <sys:String x:Key="SaveAndPrint">محفوظ + پرنٹ (F9)</sys:String>
+    <sys:String x:Key="BillSavedMsg">Bill Saved — بل محفوظ ہو گیا</sys:String>
+    <sys:String x:Key="BillHeldMsg">بل روک دیا گیا ہے۔</sys:String>
+    <sys:String x:Key="EmptyBillMsg">پہلے کم از کم ایک آئٹم شامل کریں۔</sys:String>
+    <sys:String x:Key="CreditCustomerRequiredMsg">ادھار یا جزوی ادائیگی کے لیے پہلے گاہک منتخب کریں (آنے والے گاہک کو ادھار نہیں مل سکتا)۔</sys:String>
+    <sys:String x:Key="NoProductFoundMsg">اس تلاش / بارکوڈ کی کوئی مصنوعہ نہیں ملی۔</sys:String>
+
+    <!-- Quotations — کوٹیشن -->
+    <sys:String x:Key="Quotations">کوٹیشنز</sys:String>
+    <sys:String x:Key="QuotationNo">کوٹیشن نمبر</sys:String>
+    <sys:String x:Key="NewQuotation">نئی کوٹیشن</sys:String>
+    <sys:String x:Key="SaveQuotation">کوٹیشن محفوظ کریں</sys:String>
+    <sys:String x:Key="QuotationSavedMsg">Quotation Saved — کوٹیشن محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="PrintQuotation">کوٹیشن پرنٹ کریں (A4)</sys:String>
+    <sys:String x:Key="ConvertToBill">بل بنائیں</sys:String>
+    <sys:String x:Key="ConvertedMsg">کوٹیشن بل میں بدل گئی ہے۔ اسٹاک کٹ گیا ہے۔</sys:String>
+    <sys:String x:Key="OpenStatus">کھلی</sys:String>
+    <sys:String x:Key="ConvertedStatus">بل بن گئی</sys:String>
+    <sys:String x:Key="GuestName">گاہک کا نام (اگر محفوظ نہیں)</sys:String>
+    <sys:String x:Key="GuestMobile">گاہک کا موبائل</sys:String>
+    <sys:String x:Key="ValidityNote">یہ نرخ 7 دن کے لیے ہیں</sys:String>
+
+    <!-- Customers / Khata — گاہک / کھاتہ -->
+    <sys:String x:Key="Customers">گاہک</sys:String>
+    <sys:String x:Key="CustomerKhata">گاہک / کھاتہ</sys:String>
+    <sys:String x:Key="AddCustomer">گاہک شامل کریں</sys:String>
+    <sys:String x:Key="CustomerSaved">گاہک محفوظ ہو گیا۔</sys:String>
+    <sys:String x:Key="CustomerName">گاہک کا نام</sys:String>
+    <sys:String x:Key="CustomerType">گاہک کی قسم</sys:String>
+    <sys:String x:Key="Regular">باقاعدہ</sys:String>
+    <sys:String x:Key="Plumber">پلمبر</sys:String>
+    <sys:String x:Key="Contractor">ٹھیکیدار / بلڈر</sys:String>
+    <sys:String x:Key="WalkInType">آنے والا</sys:String>
+    <sys:String x:Key="Mobile">موبائل (03XX-XXXXXXX)</sys:String>
+    <sys:String x:Key="Address">پتہ</sys:String>
+    <sys:String x:Key="City">شہر</sys:String>
+    <sys:String x:Key="CreditLimit">ادھار کی حد (روپے، 0 = کوئی حد نہیں)</sys:String>
+    <sys:String x:Key="OpeningBalance">ابتدائی بقایا / پرانا ادھار (روپے)</sys:String>
+    <sys:String x:Key="CurrentBalance">موجودہ بقایا</sys:String>
+    <sys:String x:Key="KhataLedger">کھاتہ</sys:String>
+    <sys:String x:Key="Description">تفصیل</sys:String>
+    <sys:String x:Key="Debit">ڈیبٹ (بل)</sys:String>
+    <sys:String x:Key="CreditCol">کریڈٹ (وصولی)</sys:String>
+    <sys:String x:Key="ReceivePayment">وصولی لیں</sys:String>
+    <sys:String x:Key="PaymentAmount">وصولی رقم (روپے)</sys:String>
+    <sys:String x:Key="PaymentSavedMsg">Payment Saved — وصولی محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="CreditLimitWarning">خبردار: اس گاہک کا ادھار حد سے بڑھ گیا ہے!</sys:String>
+    <sys:String x:Key="BalanceWord">بقایا</sys:String>
+
+    <!-- Settings — ترتیبات -->
+    <sys:String x:Key="Settings">ترتیبات</sys:String>
+    <sys:String x:Key="ShopNameEn">دکان کا نام (انگریزی)</sys:String>
+    <sys:String x:Key="ShopNameUr">دکان کا نام (اردو)</sys:String>
+    <sys:String x:Key="ShopAddress">دکان کا پتہ</sys:String>
+    <sys:String x:Key="Phone">فون</sys:String>
+    <sys:String x:Key="WhatsApp">واٹس ایپ نمبر</sys:String>
+    <sys:String x:Key="TaxEnabled">ٹیکس فعال</sys:String>
+    <sys:String x:Key="TaxRatePercent">ٹیکس فیصد</sys:String>
+    <sys:String x:Key="DefaultLanguage">شروع میں پہلے سے زبان</sys:String>
+    <sys:String x:Key="ReceiptPrinter">رسید پرنٹر کا نام</sys:String>
+    <sys:String x:Key="A4Printer">A4 پرنٹر کا نام</sys:String>
+    <sys:String x:Key="BackupFolder">بیک اپ فولڈر کا پتہ</sys:String>
+    <sys:String x:Key="BackupNow">ابھی بیک اپ لیں</sys:String>
+    <sys:String x:Key="BackupDoneMsg">بیک اپ ہو گیا۔</sys:String>
+    <sys:String x:Key="SettingsSavedMsg">ترتیبات محفوظ ہو گئیں۔</sys:String>
+    <sys:String x:Key="ChangePasswordNote">پہلا لاگ ان admin / admin123 ہے۔ لائیو استعمال سے پہلے ڈویلپر سے اسے بدلوائیں (صارفین اسکرین مرحلہ 3 میں ہے)۔</sys:String>
+
+    <!-- Printing — always bilingual on paper -->
+    <sys:String x:Key="ReceiptTitle">سیلز رسید</sys:String>
+    <sys:String x:Key="QuotationTitle">کوٹیشن / تخمینہ</sys:String>
+    <sys:String x:Key="ReceiptThankYou">آپ کے کاروبار کا شکریہ!</sys:String>
+    <sys:String x:Key="Paid">وصول</sys:String>
+    <sys:String x:Key="Balance">بقایا</sys:String>
+</ResourceDictionary>

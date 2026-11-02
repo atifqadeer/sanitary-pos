@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>SanitaryPOS</AssemblyName>
+    <RootNamespace>SanitaryPOS</RootNamespace>
+    <!-- Single-file shop app: keep it simple, no publishing tricks in Phase 1 -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.8" />
+  </ItemGroup>
+
+  <!-- The tested schema lives in the repo at database/schema.sql.
+       Embed it so the app creates sanitarypos.db on first run with no extra files. -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\database\schema.sql" LogicalName="SanitaryPOS.schema.sql" />
+  </ItemGroup>
+
+</Project>

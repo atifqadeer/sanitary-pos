@@ -1,0 +1,50 @@
+<UserControl x:Class="SanitaryPOS.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <Grid>
+            <TextBlock Text="{DynamicResource Dashboard}" Style="{StaticResource HeaderText}"/>
+            <Button Content="{DynamicResource Refresh}" Style="{StaticResource BigButton}"
+                    Command="{Binding RefreshCommand}" HorizontalAlignment="Right"/>
+        </Grid>
+
+        <WrapPanel>
+            <Border Style="{StaticResource StatCard}" Width="240">
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource TodaysSales}" FontSize="14" Foreground="#555"/>
+                    <TextBlock Text="{Binding TodaysSalesText}" FontSize="26" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource StatCard}" Width="180">
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource TodaysBills}" FontSize="14" Foreground="#555"/>
+                    <TextBlock Text="{Binding TodaysBills}" FontSize="26" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Profit: Admin only. Cashier never sees this card (ShowProfit is role-gated in the VM). -->
+            <Border Style="{StaticResource StatCard}" Width="240"
+                    Visibility="{Binding ShowProfit, Converter={StaticResource BoolToVis}}">
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource TodaysProfit}" FontSize="14" Foreground="#555"/>
+                    <TextBlock Text="{Binding TodaysProfitText}" FontSize="26" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource StatCard}" Width="260">
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource TotalUdhaarReceivable}" FontSize="14" Foreground="#555"/>
+                    <TextBlock Text="{Binding TotalReceivableText}" FontSize="26" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource StatCard}" Width="200">
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource LowStockAlerts}" FontSize="14" Foreground="#555"/>
+                    <TextBlock Text="{Binding LowStockCount}" FontSize="26" FontWeight="Bold" Foreground="#C62828"/>
+                </StackPanel>
+            </Border>
+        </WrapPanel>
+    </StackPanel>
+</UserControl>

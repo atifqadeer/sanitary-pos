@@ -1,0 +1,62 @@
+<UserControl x:Class="SanitaryPOS.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Width="560" HorizontalAlignment="Left">
+            <TextBlock Text="{DynamicResource Settings}" Style="{StaticResource HeaderText}"/>
+
+            <TextBlock Text="{DynamicResource ShopNameEn}" Style="{StaticResource FormLabel}"/>
+            <TextBox Text="{Binding ShopNameEn}" Style="{StaticResource FormTextBox}"/>
+
+            <TextBlock Text="{DynamicResource ShopNameUr}" Style="{StaticResource FormLabel}"/>
+            <TextBox Text="{Binding ShopNameUr}" Style="{StaticResource FormTextBox}"/>
+
+            <TextBlock Text="{DynamicResource ShopAddress}" Style="{StaticResource FormLabel}"/>
+            <TextBox Text="{Binding ShopAddress}" Style="{StaticResource FormTextBox}"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                    <TextBlock Text="{DynamicResource Phone}" Style="{StaticResource FormLabel}"/>
+                    <TextBox Text="{Binding ShopPhone}" Style="{StaticResource FormTextBox}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                    <TextBlock Text="{DynamicResource WhatsApp}" Style="{StaticResource FormLabel}"/>
+                    <TextBox Text="{Binding ShopWhatsApp}" Style="{StaticResource FormTextBox}"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                <CheckBox Content="{DynamicResource TaxEnabled}" IsChecked="{Binding TaxEnabled}" VerticalAlignment="Center"/>
+                <TextBlock Text="{DynamicResource TaxRatePercent}" VerticalAlignment="Center" Margin="16,0,6,0"/>
+                <TextBox Text="{Binding TaxRateText}" Width="70" Style="{StaticResource FormTextBox}"/>
+            </StackPanel>
+
+            <TextBlock Text="{DynamicResource DefaultLanguage}" Style="{StaticResource FormLabel}"/>
+            <ComboBox ItemsSource="{Binding LanguageOptions}" SelectedItem="{Binding DefaultLanguage}"
+                      Style="{StaticResource FormCombo}" Width="160" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="{DynamicResource ReceiptPrinter}" Style="{StaticResource FormLabel}"/>
+            <TextBox Text="{Binding ReceiptPrinter}" Style="{StaticResource FormTextBox}"/>
+
+            <TextBlock Text="{DynamicResource A4Printer}" Style="{StaticResource FormLabel}"/>
+            <TextBox Text="{Binding A4Printer}" Style="{StaticResource FormTextBox}"/>
+
+            <TextBlock Text="{DynamicResource BackupFolder}" Style="{StaticResource FormLabel}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding BackupFolder}" Style="{StaticResource FormTextBox}" Width="400"/>
+                <Button Content="{DynamicResource BackupNow}" Style="{StaticResource BigButton}"
+                        Command="{Binding BackupNowCommand}"/>
+            </StackPanel>
+
+            <Button Content="{DynamicResource Save}" Style="{StaticResource PrimaryButton}"
+                    Command="{Binding SaveSettingsCommand}" HorizontalAlignment="Left" MinWidth="160" Margin="0,10,0,0"/>
+
+            <TextBlock Text="{DynamicResource ChangePasswordNote}" TextWrapping="Wrap"
+                       Foreground="#888" FontSize="12" Margin="0,16,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
