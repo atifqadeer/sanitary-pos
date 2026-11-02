@@ -37,11 +37,37 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,6,0,0">
-                <TextBlock Text="{DynamicResource QuickPriceUpdate}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                <TextBox Text="{Binding QuickPriceText}" Width="110" Style="{StaticResource FormTextBox}"/>
-                <Button Content="{DynamicResource Save}" Style="{StaticResource BigButton}"
-                        Command="{Binding QuickPriceCommand}"/>
+            <StackPanel Grid.Row="3" Margin="0,6,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource QuickPriceUpdate}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <TextBox Text="{Binding QuickPriceText}" Width="110" Style="{StaticResource FormTextBox}"/>
+                    <Button Content="{DynamicResource Save}" Style="{StaticResource BigButton}"
+                            Command="{Binding QuickPriceCommand}"/>
+                </StackPanel>
+
+                <!-- Bulk price update (Phase 2, Admin only): whole brand, one field, +/- % -->
+                <Border Background="White" BorderBrush="#DDD" BorderThickness="1" Padding="8" Margin="0,6,0,0"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource BulkPriceUpdate}" FontWeight="Bold" FontSize="13"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding BulkBrand}"
+                                          Width="150" FontSize="13" ToolTip="{DynamicResource Brand}"/>
+                                <ComboBox ItemsSource="{Binding BulkPriceFields}" SelectedItem="{Binding BulkField}"
+                                          Width="110" FontSize="13" Margin="6,0,0,0" ToolTip="{DynamicResource PriceField}"/>
+                                <TextBox Text="{Binding BulkPercentText}" Width="70" FontSize="13" Margin="6,0,0,0"
+                                         ToolTip="{DynamicResource PercentChange}"/>
+                                <TextBlock VerticalAlignment="Center" Margin="6,0,0,0">
+                                    <Run Text="{DynamicResource AffectedProducts}"/><Run Text=": "/>
+                                    <Run Text="{Binding BulkAffectedCount, Mode=OneWay}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <Button Content="{DynamicResource Apply}" Style="{StaticResource BigButton}"
+                                        Command="{Binding ApplyBulkPriceCommand}" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Grid>
 

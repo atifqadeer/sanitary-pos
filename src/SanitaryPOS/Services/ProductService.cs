@@ -107,6 +107,46 @@ public class ProductService
                      new { r = retailRatePaisa, id = productId });
     }
 
+    /// <summary>
+    /// Phase 2 — Bulk price update: change ONE price field (Purchase / Retail /
+    /// Trade / Wholesale) for ALL active products of one brand by a percentage
+    /// (+5 = 5% increase, -10 = 10% decrease), in ONE transaction.
+    /// Rounding: new rate is rounded to the nearest paisa. Called from the
+    /// Products screen, which is responsible for the Admin check + confirmation.
+    /// Returns how many products were updated.
+    /// </summary>
+    public int BulkUpdatePrices(long brandId, string priceField, double percent, long? userId)
+    {
+        string column = priceField switch
+        {
+            "Purchase" => "purchase_rate_paisa",
+            "Trade" => "trade_rate_paisa",
+            "Wholesale" => "wholesale_rate_paisa",
+            _ => "retail_rate_paisa"
+        };
+
+        using var conn = _db.CreateConnection();
+        using var tx = conn.BeginTransaction();
+        // Column name comes from the fixed switch above (never user text), so
+        // building it into the SQL is safe; values stay parameterised.
+        int affected = conn.Execute(
+            $@"UPDATE products
+               SET {column} = CAST(ROUND({column} * (1.0 + @percent / 100.0)) AS INTEGER)
+               WHERE brand_id = @brandId AND is_active = 1",
+            new { percent, brandId }, tx);
+        tx.Commit();
+        return affected;
+    }
+
+    /// <summary>How many active products a bulk price update would touch (preview count).</summary>
+    public int CountByBrand(long brandId)
+    {
+        using var conn = _db.CreateConnection();
+        return conn.ExecuteScalar<int>(
+            "SELECT COUNT(*) FROM products WHERE brand_id = @brandId AND is_active = 1",
+            new { brandId });
+    }
+
     public List<Product> GetLowStock()
     {
         using var conn = _db.CreateConnection();

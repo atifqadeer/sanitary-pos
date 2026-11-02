@@ -20,3 +20,15 @@ public partial class SettingsView : UserControl
 {
     public SettingsView() => InitializeComponent();
 }
+
+// Phase 2 views with no code-behind logic of their own.
+
+public partial class SuppliersView : UserControl
+{
+    public SuppliersView() => InitializeComponent();
+}
+
+public partial class ReportsView : UserControl
+{
+    public ReportsView() => InitializeComponent();
+}

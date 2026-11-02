@@ -61,6 +61,46 @@ public class QuotationService
         return q;
     }
 
+    /// <summary>
+    /// Phase 2 — Update an existing OPEN quotation: head fields are updated and
+    /// its items are replaced (deleted + re-inserted) in ONE transaction.
+    /// The quotation number is NOT changed. Converted/Cancelled quotations
+    /// cannot be edited — this throws, and the screen checks first too.
+    /// </summary>
+    public void UpdateQuotation(Quotation q, IReadOnlyList<QuotationItem> items)
+    {
+        using var conn = _db.CreateConnection();
+        using var tx = conn.BeginTransaction();
+
+        string status = conn.QueryFirstOrDefault<string>(
+            "SELECT status FROM quotations WHERE id = @id", new { id = q.Id }, tx) ?? "";
+        if (status != "Open")
+            throw new InvalidOperationException("Only an Open quotation can be edited.");
+
+        conn.Execute(
+            @"UPDATE quotations SET customer_id=@CustomerId,
+                customer_name_snapshot=@CustomerNameSnapshot,
+                customer_mobile_snapshot=@CustomerMobileSnapshot,
+                price_level=@PriceLevel, subtotal_paisa=@SubtotalPaisa,
+                discount_paisa=@DiscountPaisa, total_paisa=@TotalPaisa,
+                valid_days=@ValidDays
+              WHERE id=@Id", q, tx);
+
+        conn.Execute("DELETE FROM quotation_items WHERE quotation_id = @id", new { id = q.Id }, tx);
+
+        foreach (var item in items)
+        {
+            item.QuotationId = q.Id;
+            conn.Execute(
+                @"INSERT INTO quotation_items (quotation_id, product_id, product_name_snapshot,
+                                               qty, rate_paisa, discount_paisa, line_total_paisa)
+                  VALUES (@QuotationId, @ProductId, @ProductNameSnapshot,
+                          @Qty, @RatePaisa, @DiscountPaisa, @LineTotalPaisa)", item, tx);
+        }
+
+        tx.Commit();
+    }
+
     public QuotationDetail? GetDetail(long quotationId)
     {
         using var conn = _db.CreateConnection();

@@ -170,6 +170,98 @@
     <sys:String x:Key="CreditLimitWarning">Warning: this customer is over the credit limit!</sys:String>
     <sys:String x:Key="BalanceWord">Balance</sys:String>
 
+    <!-- Purchase / GRN (Phase 2) -->
+    <sys:String x:Key="PurchaseTitle">Purchase (GRN)</sys:String>
+    <sys:String x:Key="Supplier">Supplier</sys:String>
+    <sys:String x:Key="SupplierBillNo">Supplier Bill No</sys:String>
+    <sys:String x:Key="NewSupplierName">New Supplier Name</sys:String>
+    <sys:String x:Key="AddSupplier">Add Supplier</sys:String>
+    <sys:String x:Key="SupplierNameRequiredMsg">Please write the supplier name first.</sys:String>
+    <sys:String x:Key="SelectSupplierMsg">Please select a supplier first.</sys:String>
+    <sys:String x:Key="PurchaseSavedMsg">Purchase Saved — خریداری محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="SavePurchase">Save Purchase</sys:String>
+    <sys:String x:Key="PurchaseHistory">Purchase History</sys:String>
+    <sys:String x:Key="PaidNow">Paid Now (Rs)</sys:String>
+    <sys:String x:Key="BalancePayable">Balance Payable</sys:String>
+    <sys:String x:Key="Details">Details</sys:String>
+
+    <!-- Suppliers (Phase 2) -->
+    <sys:String x:Key="SuppliersTitle">Suppliers</sys:String>
+    <sys:String x:Key="ContactPerson">Contact Person</sys:String>
+    <sys:String x:Key="OpeningBalancePayable">Opening Balance / Old Payable (Rs)</sys:String>
+    <sys:String x:Key="SupplierLedger">Supplier Ledger (Khata)</sys:String>
+    <sys:String x:Key="PaySupplier">Pay Supplier</sys:String>
+    <sys:String x:Key="SupplierSaved">Supplier saved.</sys:String>
+    <sys:String x:Key="SupplierPaymentSavedMsg">Payment Given — ادائیگی محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="TotalPayable">Total Payable</sys:String>
+    <sys:String x:Key="PayableWord">Payable (Dena Hai)</sys:String>
+
+    <!-- Returns & Exchange (Phase 2) -->
+    <sys:String x:Key="ReturnsTitle">Returns &amp; Exchange</sys:String>
+    <sys:String x:Key="EnterBillNo">Bill No:</sys:String>
+    <sys:String x:Key="LoadBill">Load Bill</sys:String>
+    <sys:String x:Key="LoadBillFirstMsg">Load a bill first.</sys:String>
+    <sys:String x:Key="BillNotFoundMsg">No completed bill found with this number.</sys:String>
+    <sys:String x:Key="SoldQty">Sold</sys:String>
+    <sys:String x:Key="AlreadyReturned">Already Returned</sys:String>
+    <sys:String x:Key="ReturnQty">Return Qty</sys:String>
+    <sys:String x:Key="Condition">Condition</sys:String>
+    <sys:String x:Key="RefundTotal">Refund Total</sys:String>
+    <sys:String x:Key="SettleMethod">Settle By</sys:String>
+    <sys:String x:Key="SaveReturn">Save Return</sys:String>
+    <sys:String x:Key="ReturnSavedMsg">Return Saved — واپسی محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="ReturnQtyErrorMsg">Enter a return quantity — it cannot be more than sold minus already returned.</sys:String>
+    <sys:String x:Key="ReturnsHistory">Returns History</sys:String>
+    <sys:String x:Key="ExchangeCreditMsg">Exchange credit {0} from the return of Bill #{1}. Select the new items for this customer and settle this credit in Paid / Discount on the new bill.</sys:String>
+
+    <!-- Reports (Phase 2) -->
+    <sys:String x:Key="ReportsTitle">Reports</sys:String>
+    <sys:String x:Key="ReportType">Report</sys:String>
+    <sys:String x:Key="FromDate">From Date</sys:String>
+    <sys:String x:Key="ToDate">To Date</sys:String>
+    <sys:String x:Key="TodayBtn">Today</sys:String>
+    <sys:String x:Key="ThisWeekBtn">This Week</sys:String>
+    <sys:String x:Key="ThisMonthBtn">This Month</sys:String>
+    <sys:String x:Key="RunReport">Run Report</sys:String>
+    <sys:String x:Key="ExportExcelCsv">Export Excel (CSV)</sys:String>
+    <sys:String x:Key="ExportDoneMsg">File saved. You can open it in Excel.</sys:String>
+    <sys:String x:Key="ReportSales">Sales Report</sys:String>
+    <sys:String x:Key="ReportProfit">Profit Report (Estimated)</sys:String>
+    <sys:String x:Key="ReportBrand">Brand-wise Sales</sys:String>
+    <sys:String x:Key="ReportCategory">Category-wise Sales</sys:String>
+    <sys:String x:Key="ReportReceivable">Udhaar Receivable List</sys:String>
+    <sys:String x:Key="ReportPayable">Supplier Payable List</sys:String>
+    <sys:String x:Key="ReportStockValue">Stock Value Report</sys:String>
+    <sys:String x:Key="Bills">Bills</sys:String>
+    <sys:String x:Key="SalesWord">Sales</sys:String>
+    <sys:String x:Key="CostWord">Cost</sys:String>
+    <sys:String x:Key="EstimatedProfit">Estimated Profit</sys:String>
+    <sys:String x:Key="GroupName">Brand / Category</sys:String>
+    <sys:String x:Key="CreditLimitShort">Credit Limit</sys:String>
+    <sys:String x:Key="OverLimit">Over Limit</sys:String>
+    <sys:String x:Key="YesWord">Yes</sys:String>
+    <sys:String x:Key="StockPurchaseValue">Stock Value (Purchase)</sys:String>
+    <sys:String x:Key="StockSaleValue">Stock Value (Sale)</sys:String>
+    <sys:String x:Key="ProfitAdminOnlyMsg">The profit report is for Admin only.</sys:String>
+
+    <!-- Bulk price update (Phase 2) -->
+    <sys:String x:Key="BulkPriceUpdate">Bulk Price Update</sys:String>
+    <sys:String x:Key="PriceField">Price Field</sys:String>
+    <sys:String x:Key="PercentChange">% Change (+/-)</sys:String>
+    <sys:String x:Key="AffectedProducts">Products</sys:String>
+    <sys:String x:Key="Apply">Apply</sys:String>
+    <sys:String x:Key="BulkPriceConfirmMsg">Change {0} prices for brand {1} by {2}%? This will update {3} products.</sys:String>
+    <sys:String x:Key="BulkPriceDoneMsg">Prices updated for {0} products.</sys:String>
+    <sys:String x:Key="BulkPercentRequiredMsg">Write a % change first, e.g. 5 or -5.</sys:String>
+    <sys:String x:Key="SelectBrandMsg">Please select a brand first.</sys:String>
+    <sys:String x:Key="AdminOnlyMsg">This is for Admin only.</sys:String>
+
+    <!-- Phase 1 gap fixes (Phase 2) -->
+    <sys:String x:Key="ReprintLastBill">Reprint Last Bill</sys:String>
+    <sys:String x:Key="NoBillToReprintMsg">No completed bill found to reprint.</sys:String>
+    <sys:String x:Key="EditQuotation">Edit Quotation</sys:String>
+    <sys:String x:Key="QuotationUpdatedMsg">Quotation Updated — کوٹیشن تبدیل ہو گئی</sys:String>
+
     <!-- Settings -->
     <sys:String x:Key="Settings">Settings</sys:String>
     <sys:String x:Key="ShopNameEn">Shop Name (English)</sys:String>

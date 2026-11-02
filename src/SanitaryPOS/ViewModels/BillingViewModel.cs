@@ -49,6 +49,11 @@ public partial class BillingViewModel : ViewModelBase
     [ObservableProperty] private string _billDiscountText = "0";
     [ObservableProperty] private bool _heldListVisible;
 
+    /// <summary>Phase 2: green status line, e.g. the exchange credit note after a return.</summary>
+    [ObservableProperty] private string _statusMessage = "";
+    public bool HasStatusMessage => !string.IsNullOrWhiteSpace(StatusMessage);
+    partial void OnStatusMessageChanged(string value) => OnPropertyChanged(nameof(HasStatusMessage));
+
     // ----- Computed totals (paisa, refreshed by Recalculate) -----
     [ObservableProperty] private long _subtotalPaisa;
     [ObservableProperty] private long _itemDiscountPaisa;
@@ -192,6 +197,7 @@ public partial class BillingViewModel : ViewModelBase
         Lines.Clear();
         SearchText = "";
         PaidText = "";
+        StatusMessage = "";
         BillDiscountText = "0";
         SelectedPaymentMethod = "Cash";
         SelectedCustomer = CustomerOptions.Count > 0 ? CustomerOptions[0] : null;
@@ -265,6 +271,36 @@ public partial class BillingViewModel : ViewModelBase
 
         Info($"{S("BillSavedMsg")}  #{saved.BillNo} — {MoneyFormatter.Format(saved.TotalPaisa)}");
         ClearBill();
+    }
+
+    /// <summary>
+    /// Phase 2 — Exchange prefill (called by the shell after a return settled
+    /// as Exchange): the returned customer is selected and the credit amount is
+    /// shown on the status line. The new bill itself stays a normal bill —
+    /// the counter adjusts Paid/Discount by hand against this credit.
+    /// </summary>
+    public void PrefillFromExchange(Customer? customer, long creditPaisa, long billNo)
+    {
+        ClearBill();
+        if (customer != null)
+        {
+            SelectedCustomer = CustomerOptions.FirstOrDefault(c => c.Id == customer.Id)
+                               ?? CustomerOptions[0];
+        }
+        StatusMessage = string.Format(S("ExchangeCreditMsg"),
+                                      MoneyFormatter.Format(creditPaisa), billNo);
+    }
+
+    /// <summary>Phase 2 — Reprint the most recent Completed bill (closes a Phase 1 gap).</summary>
+    [RelayCommand]
+    private void ReprintLastBill()
+    {
+        var detail = _sales.GetLastCompletedSale();
+        if (detail == null) { Warn(S("NoBillToReprintMsg")); return; }
+        new ReceiptService().PrintReceipt(
+            detail.Sale, detail.Items, _settings.GetAll(),
+            detail.Sale.CustomerName,
+            _settings.Get("receipt_printer", ""));
     }
 
     [RelayCommand]

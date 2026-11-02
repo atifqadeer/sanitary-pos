@@ -155,6 +155,77 @@ public class ReceiptService
         => PrintHelper.Print(BuildReceipt(sale, items, shop, customerName), printerName, $"Receipt Bill #{sale.BillNo}");
 }
 
+/// <summary>
+/// Phase 2 — A4 report printout (bilingual header like every other printout:
+/// shop name EN + UR on top). The report title, column headings and rows come
+/// from the Reports screen in the CURRENT screen language; money cells arrive
+/// pre-formatted ("Rs 1,25,000") so this printer stays dumb and reusable.
+/// Printing to "Microsoft Print to PDF" in the dialog = the PDF export.
+/// </summary>
+public class ReportPrintService
+{
+    public FlowDocument BuildReport(string title, string dateRangeText,
+                                    IReadOnlyList<string> headers,
+                                    IReadOnlyList<IReadOnlyList<string>> rows,
+                                    string totalText,
+                                    IDictionary<string, string> shop)
+    {
+        var doc = new FlowDocument
+        {
+            PageWidth = 816,   // A4-ish at 96dpi with margins
+            PageHeight = 1056,
+            PagePadding = new Thickness(40),
+            FontFamily = new System.Windows.Media.FontFamily("Segoe UI"),
+            FontSize = 12
+        };
+
+        PrintHelper.AddShopHeader(doc, shop, 19);
+        doc.Blocks.Add(PrintHelper.Para(title, 15, true, TextAlignment.Center));
+        if (!string.IsNullOrWhiteSpace(dateRangeText))
+            doc.Blocks.Add(PrintHelper.Para(dateRangeText, 11, false, TextAlignment.Center));
+
+        int cols = Math.Max(1, headers.Count);
+        var table = new Table { FontSize = 11 };
+        for (int i = 0; i < cols; i++)
+        {
+            // First column (names/dates) gets the most room.
+            double width = i == 0 ? 240 : 120;
+            table.Columns.Add(new TableColumn { Width = new GridLength(width) });
+        }
+
+        var group = new TableRowGroup();
+        var headerRow = new TableRow();
+        for (int i = 0; i < cols; i++)
+            headerRow.Cells.Add(PrintHelper.Cell(i < headers.Count ? headers[i] : "", true,
+                                                 i == 0 ? TextAlignment.Left : TextAlignment.Right));
+        group.Rows.Add(headerRow);
+
+        foreach (var row in rows)
+        {
+            var tr = new TableRow();
+            for (int i = 0; i < cols; i++)
+                tr.Cells.Add(PrintHelper.Cell(i < row.Count ? row[i] : "",
+                                              false, i == 0 ? TextAlignment.Left : TextAlignment.Right));
+            group.Rows.Add(tr);
+        }
+        table.RowGroups.Add(group);
+        doc.Blocks.Add(table);
+
+        if (!string.IsNullOrWhiteSpace(totalText))
+            doc.Blocks.Add(PrintHelper.Para(totalText, 13, true, TextAlignment.Right));
+        return doc;
+    }
+
+    public bool PrintReport(string title, string dateRangeText,
+                            IReadOnlyList<string> headers,
+                            IReadOnlyList<IReadOnlyList<string>> rows,
+                            string totalText,
+                            IDictionary<string, string> shop, string? printerName)
+        => PrintHelper.Print(
+            BuildReport(title, dateRangeText, headers, rows, totalText, shop),
+            printerName, title);
+}
+
 /// <summary>A4 bilingual quotation (for builders / plumbers / house customers).</summary>
 public class QuotationPrintService
 {

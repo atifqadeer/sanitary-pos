@@ -118,6 +118,9 @@
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,6,0,0">
                 <Button Content="{DynamicResource PrintQuotation}" Style="{StaticResource BigButton}"
                         Command="{Binding PrintQuotationCommand}"/>
+                <Button Content="{DynamicResource EditQuotation}" Style="{StaticResource BigButton}"
+                        Command="{Binding EditQuotationCommand}"
+                        IsEnabled="{Binding CanEdit}"/>
                 <Button Content="{DynamicResource ConvertToBill}" Style="{StaticResource PrimaryButton}"
                         Command="{Binding ConvertToBillCommand}"
                         IsEnabled="{Binding CanConvert}"/>

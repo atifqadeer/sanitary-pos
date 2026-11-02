@@ -171,6 +171,98 @@
     <sys:String x:Key="CreditLimitWarning">خبردار: اس گاہک کا ادھار حد سے بڑھ گیا ہے!</sys:String>
     <sys:String x:Key="BalanceWord">بقایا</sys:String>
 
+    <!-- Purchase / GRN — خریداری (مرحلہ 2) -->
+    <sys:String x:Key="PurchaseTitle">خریداری (اسٹاک اندراج)</sys:String>
+    <sys:String x:Key="Supplier">سپلائر</sys:String>
+    <sys:String x:Key="SupplierBillNo">سپلائر بل نمبر</sys:String>
+    <sys:String x:Key="NewSupplierName">نئے سپلائر کا نام</sys:String>
+    <sys:String x:Key="AddSupplier">سپلائر شامل کریں</sys:String>
+    <sys:String x:Key="SupplierNameRequiredMsg">پہلے سپلائر کا نام لکھیں۔</sys:String>
+    <sys:String x:Key="SelectSupplierMsg">پہلے سپلائر منتخب کریں۔</sys:String>
+    <sys:String x:Key="PurchaseSavedMsg">Purchase Saved — خریداری محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="SavePurchase">خریداری محفوظ کریں</sys:String>
+    <sys:String x:Key="PurchaseHistory">خریداری کی تفصیل</sys:String>
+    <sys:String x:Key="PaidNow">ابھی ادائیگی (روپے)</sys:String>
+    <sys:String x:Key="BalancePayable">بقایا دینا ہے</sys:String>
+    <sys:String x:Key="Details">تفصیل</sys:String>
+
+    <!-- Suppliers — سپلائر (مرحلہ 2) -->
+    <sys:String x:Key="SuppliersTitle">سپلائر</sys:String>
+    <sys:String x:Key="ContactPerson">رابطہ شخص</sys:String>
+    <sys:String x:Key="OpeningBalancePayable">ابتدائی بقایا / پرانا دینا (روپے)</sys:String>
+    <sys:String x:Key="SupplierLedger">سپلائر کھاتہ</sys:String>
+    <sys:String x:Key="PaySupplier">سپلائر کو ادائیگی</sys:String>
+    <sys:String x:Key="SupplierSaved">سپلائر محفوظ ہو گیا۔</sys:String>
+    <sys:String x:Key="SupplierPaymentSavedMsg">Payment Given — ادائیگی محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="TotalPayable">کل دینا ہے</sys:String>
+    <sys:String x:Key="PayableWord">دینا ہے</sys:String>
+
+    <!-- Returns & Exchange — واپسی اور تبدیلی (مرحلہ 2) -->
+    <sys:String x:Key="ReturnsTitle">واپسی اور تبدیلی</sys:String>
+    <sys:String x:Key="EnterBillNo">بل نمبر:</sys:String>
+    <sys:String x:Key="LoadBill">بل لائیں</sys:String>
+    <sys:String x:Key="LoadBillFirstMsg">پہلے بل لائیں۔</sys:String>
+    <sys:String x:Key="BillNotFoundMsg">اس نمبر کا کوئی مکمل بل نہیں ملا۔</sys:String>
+    <sys:String x:Key="SoldQty">فروخت شدہ</sys:String>
+    <sys:String x:Key="AlreadyReturned">پہلے واپس شدہ</sys:String>
+    <sys:String x:Key="ReturnQty">واپسی مقدار</sys:String>
+    <sys:String x:Key="Condition">حالت</sys:String>
+    <sys:String x:Key="RefundTotal">واپسی کل رقم</sys:String>
+    <sys:String x:Key="SettleMethod">طے شدہ طریقہ</sys:String>
+    <sys:String x:Key="SaveReturn">واپسی محفوظ کریں</sys:String>
+    <sys:String x:Key="ReturnSavedMsg">Return Saved — واپسی محفوظ ہو گئی</sys:String>
+    <sys:String x:Key="ReturnQtyErrorMsg">واپسی مقدار لکھیں — یہ فروخت شدہ مائنس پہلے واپس شدہ سے زیادہ نہیں ہو سکتی۔</sys:String>
+    <sys:String x:Key="ReturnsHistory">واپسی کی تفصیل</sys:String>
+    <sys:String x:Key="ExchangeCreditMsg">بل نمبر {1} کی واپسی سے تبدیلی کریڈٹ {0}۔ اس گاہک کے لیے نئی اشیاء منتخب کریں اور یہ کریڈٹ نئے بل میں وصول / رعایت میں طے کریں۔</sys:String>
+
+    <!-- Reports — رپورٹیں (مرحلہ 2) -->
+    <sys:String x:Key="ReportsTitle">رپورٹیں</sys:String>
+    <sys:String x:Key="ReportType">رپورٹ</sys:String>
+    <sys:String x:Key="FromDate">تاریخ سے</sys:String>
+    <sys:String x:Key="ToDate">تاریخ تک</sys:String>
+    <sys:String x:Key="TodayBtn">آج</sys:String>
+    <sys:String x:Key="ThisWeekBtn">اس ہفتہ</sys:String>
+    <sys:String x:Key="ThisMonthBtn">اس مہینہ</sys:String>
+    <sys:String x:Key="RunReport">رپورٹ چلائیں</sys:String>
+    <sys:String x:Key="ExportExcelCsv">ایکسل میں نکالیں (CSV)</sys:String>
+    <sys:String x:Key="ExportDoneMsg">فائل محفوظ ہو گئی۔ اسے ایکسل میں کھول سکتے ہیں۔</sys:String>
+    <sys:String x:Key="ReportSales">فروخت رپورٹ</sys:String>
+    <sys:String x:Key="ReportProfit">منافع رپورٹ (تخمینہ)</sys:String>
+    <sys:String x:Key="ReportBrand">برانڈ کے حساب سے فروخت</sys:String>
+    <sys:String x:Key="ReportCategory">قسم کے حساب سے فروخت</sys:String>
+    <sys:String x:Key="ReportReceivable">ادھار لینا ہے — فہرست</sys:String>
+    <sys:String x:Key="ReportPayable">سپلائر دینا ہے — فہرست</sys:String>
+    <sys:String x:Key="ReportStockValue">اسٹاک مالیت رپورٹ</sys:String>
+    <sys:String x:Key="Bills">بل</sys:String>
+    <sys:String x:Key="SalesWord">فروخت</sys:String>
+    <sys:String x:Key="CostWord">لاگت</sys:String>
+    <sys:String x:Key="EstimatedProfit">تخمینی منافع</sys:String>
+    <sys:String x:Key="GroupName">برانڈ / قسم</sys:String>
+    <sys:String x:Key="CreditLimitShort">ادھار حد</sys:String>
+    <sys:String x:Key="OverLimit">حد سے زیادہ</sys:String>
+    <sys:String x:Key="YesWord">ہاں</sys:String>
+    <sys:String x:Key="StockPurchaseValue">اسٹاک مالیت (خرید قیمت)</sys:String>
+    <sys:String x:Key="StockSaleValue">اسٹاک مالیت (فروخت قیمت)</sys:String>
+    <sys:String x:Key="ProfitAdminOnlyMsg">منافع رپورٹ صرف ایڈمن کے لیے ہے۔</sys:String>
+
+    <!-- Bulk price update — ایک ساتھ قیمت تبدیلی (مرحلہ 2) -->
+    <sys:String x:Key="BulkPriceUpdate">ایک ساتھ قیمت تبدیلی</sys:String>
+    <sys:String x:Key="PriceField">قیمت کی قسم</sys:String>
+    <sys:String x:Key="PercentChange">فیصد تبدیلی (+/-)</sys:String>
+    <sys:String x:Key="AffectedProducts">مصنوعات</sys:String>
+    <sys:String x:Key="Apply">لاگو کریں</sys:String>
+    <sys:String x:Key="BulkPriceConfirmMsg">برانڈ {1} کی {0} قیمتیں {2} فیصد بدل دیں؟ اس سے {3} مصنوعات بدل جائیں گی۔</sys:String>
+    <sys:String x:Key="BulkPriceDoneMsg">{0} مصنوعات کی قیمتیں بدل گئیں۔</sys:String>
+    <sys:String x:Key="BulkPercentRequiredMsg">پہلے فیصد تبدیلی لکھیں، مثلاً 5 یا -5۔</sys:String>
+    <sys:String x:Key="SelectBrandMsg">پہلے برانڈ منتخب کریں۔</sys:String>
+    <sys:String x:Key="AdminOnlyMsg">یہ صرف ایڈمن کے لیے ہے۔</sys:String>
+
+    <!-- Phase 1 gap fixes — مرحلہ 1 کی کمیاں (مرحلہ 2) -->
+    <sys:String x:Key="ReprintLastBill">آخری بل دوبارہ پرنٹ کریں</sys:String>
+    <sys:String x:Key="NoBillToReprintMsg">دوبارہ پرنٹ کے لیے کوئی مکمل بل نہیں ملا۔</sys:String>
+    <sys:String x:Key="EditQuotation">کوٹیشن تبدیل کریں</sys:String>
+    <sys:String x:Key="QuotationUpdatedMsg">Quotation Updated — کوٹیشن تبدیل ہو گئی</sys:String>
+
     <!-- Settings — ترتیبات -->
     <sys:String x:Key="Settings">ترتیبات</sys:String>
     <sys:String x:Key="ShopNameEn">دکان کا نام (انگریزی)</sys:String>

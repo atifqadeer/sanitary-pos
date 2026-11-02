@@ -20,7 +20,7 @@ public class Customer
     public override string ToString() => string.IsNullOrWhiteSpace(Mobile) ? Name : $"{Name} ({Mobile})";
 }
 
-/// <summary>Supplier model exists for Phase 2 (Purchases/Suppliers screens are placeholders in Phase 1).</summary>
+/// <summary>Supplier (Phase 2: Purchases / Suppliers screens). Balance = what WE owe them.</summary>
 public class Supplier
 {
     public long Id { get; set; }
@@ -32,6 +32,10 @@ public class Supplier
     public long OpeningBalancePaisa { get; set; }
     public long IsActive { get; set; } = 1;
     public string CreatedAt { get; set; } = "";
+
+    // Filled by SupplierService for list display (payable balance, like Customer.BalancePaisa)
+    public long BalancePaisa { get; set; }
+
     public override string ToString() => Name;
 }
 

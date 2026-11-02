@@ -12,10 +12,10 @@ using SanitaryPOS.Services;
 namespace SanitaryPOS.ViewModels;
 
 /// <summary>
-/// Quotation screen: top half = editor for a NEW quotation (same line logic as
-/// billing), bottom half = saved quotations with Print (A4) and Convert to Bill.
-/// Saved quotations are not edited in Phase 1 — make a new one instead
-/// (keeps the code simple; noted in PHASE1.md).
+/// Quotation screen: top half = editor (same line logic as billing), bottom
+/// half = saved quotations with Print (A4), Convert to Bill, and — Phase 2 —
+/// Edit: an OPEN quotation loads back into the editor and saving UPDATES it
+/// (same quotation number, no duplicate). Converted quotations cannot be edited.
 /// </summary>
 public partial class QuotationsViewModel : ViewModelBase
 {
@@ -48,6 +48,11 @@ public partial class QuotationsViewModel : ViewModelBase
     public string SubtotalText => MoneyFormatter.Format(SubtotalPaisa);
     public string GrandTotalText => MoneyFormatter.Format(GrandTotalPaisa);
     public bool CanConvert => SelectedQuotation?.Status == "Open";
+    public bool CanEdit => SelectedQuotation?.Status == "Open";
+
+    /// <summary>0 = editor holds a NEW quotation; &gt; 0 = editing that saved quotation.</summary>
+    private long _editingQuotationId;
+    public bool IsEditing => _editingQuotationId > 0;
 
     public QuotationsViewModel(LocalizationService loc, ProductService products, CustomerService customers,
                                QuotationService quotations, SettingsService settings, SessionService session)
@@ -74,7 +79,10 @@ public partial class QuotationsViewModel : ViewModelBase
     partial void OnBillDiscountTextChanged(string value) => Recalculate();
 
     partial void OnSelectedQuotationChanged(Quotation? value)
-        => OnPropertyChanged(nameof(CanConvert));
+    {
+        OnPropertyChanged(nameof(CanConvert));
+        OnPropertyChanged(nameof(CanEdit));
+    }
 
     private void Recalculate()
     {
@@ -122,9 +130,58 @@ public partial class QuotationsViewModel : ViewModelBase
     [RelayCommand]
     private void NewQuotation()
     {
+        _editingQuotationId = 0;
+        OnPropertyChanged(nameof(IsEditing));
         Lines.Clear();
         GuestName = ""; GuestMobile = ""; BillDiscountText = "0";
         SelectedCustomer = CustomerOptions[0];
+        Recalculate();
+    }
+
+    /// <summary>Phase 2 — Load the selected OPEN quotation back into the editor for editing.</summary>
+    [RelayCommand]
+    private void EditQuotation()
+    {
+        if (SelectedQuotation == null || SelectedQuotation.Status != "Open") return;
+        var detail = _quotations.GetDetail(SelectedQuotation.Id);
+        if (detail == null) return;
+        var q = detail.Quotation;
+
+        NewQuotation();
+        _editingQuotationId = q.Id;
+        OnPropertyChanged(nameof(IsEditing));
+
+        SelectedPriceLevel = q.PriceLevel;
+        if (q.CustomerId.HasValue)
+        {
+            SelectedCustomer = CustomerOptions.FirstOrDefault(c => c.Id == q.CustomerId.Value)
+                               ?? CustomerOptions[0];
+            GuestName = ""; GuestMobile = "";
+        }
+        else
+        {
+            SelectedCustomer = CustomerOptions[0];
+            GuestName = q.CustomerNameSnapshot ?? "";
+            GuestMobile = q.CustomerMobileSnapshot ?? "";
+        }
+        // In schema terms DiscountPaisa on a quotation is the BILL discount only
+        // (line discounts live on the items), exactly as SaveQuotation writes it.
+        BillDiscountText = MoneyFormatter.ToRupeesText(q.DiscountPaisa);
+
+        foreach (var i in detail.Items)
+        {
+            var p = _products.GetById(i.ProductId);
+            Lines.Add(new BillLine
+            {
+                ProductId = i.ProductId,
+                ProductName = i.ProductNameSnapshot,
+                AvailableStock = p?.StockQty ?? 0,
+                Qty = i.Qty,
+                RatePaisa = i.RatePaisa,
+                DiscountMode = "Rs",
+                DiscountValue = i.DiscountPaisa / 100.0
+            });
+        }
         Recalculate();
     }
 
@@ -136,6 +193,7 @@ public partial class QuotationsViewModel : ViewModelBase
         bool savedCustomer = SelectedCustomer != null && SelectedCustomer.Id > 0;
         var q = new Quotation
         {
+            Id = _editingQuotationId, // 0 = new, > 0 = update the loaded quotation
             CustomerId = savedCustomer ? SelectedCustomer!.Id : null,
             CustomerNameSnapshot = savedCustomer ? SelectedCustomer!.Name
                                    : (string.IsNullOrWhiteSpace(GuestName) ? null : GuestName.Trim()),
@@ -150,8 +208,25 @@ public partial class QuotationsViewModel : ViewModelBase
             UserId = _session.CurrentUser?.Id
         };
 
-        var saved = _quotations.SaveQuotation(q, Lines.Select(l => l.ToQuotationItem()).ToList());
-        Info($"{S("QuotationSavedMsg")}  #{saved.QuotationNo} — {MoneyFormatter.Format(saved.TotalPaisa)}");
+        var items = Lines.Select(l => l.ToQuotationItem()).ToList();
+        if (_editingQuotationId > 0)
+        {
+            try
+            {
+                _quotations.UpdateQuotation(q, items);
+            }
+            catch (Exception ex)
+            {
+                Warn(ex.Message);
+                return;
+            }
+            Info($"{S("QuotationUpdatedMsg")} — {MoneyFormatter.Format(q.TotalPaisa)}");
+        }
+        else
+        {
+            var saved = _quotations.SaveQuotation(q, items);
+            Info($"{S("QuotationSavedMsg")}  #{saved.QuotationNo} — {MoneyFormatter.Format(saved.TotalPaisa)}");
+        }
         LoadSaved();
         NewQuotation();
     }

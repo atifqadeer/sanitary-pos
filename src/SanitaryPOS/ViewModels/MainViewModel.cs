@@ -9,8 +9,8 @@ namespace SanitaryPOS.ViewModels;
 /// <summary>
 /// Shell ViewModel: sidebar navigation + header language toggle.
 /// Navigation simply swaps CurrentView; App.xaml DataTemplates pick the View.
-/// Phase 2/3 screens appear in the sidebar as placeholders on purpose,
-/// so the shop staff learn one layout from day one.
+/// Phase 2 screens (Purchase, Suppliers, Returns, Reports) are real since
+/// Phase 2; Users stays a Phase 3 placeholder for now.
 /// </summary>
 public partial class MainViewModel : ViewModelBase
 {
@@ -22,6 +22,10 @@ public partial class MainViewModel : ViewModelBase
     private readonly PaymentService _payments;
     private readonly SaleService _sales;
     private readonly QuotationService _quotations;
+    private readonly SupplierService _suppliers;
+    private readonly PurchaseService _purchases;
+    private readonly ReturnService _returns;
+    private readonly ReportService _reports;
 
     [ObservableProperty] private object? _currentView;
     [ObservableProperty] private bool _isLoggedIn;
@@ -35,11 +39,14 @@ public partial class MainViewModel : ViewModelBase
 
     public MainViewModel(DatabaseService db, SettingsService settings, SessionService session,
                          LocalizationService loc, ProductService products, CustomerService customers,
-                         PaymentService payments, SaleService sales, QuotationService quotations)
+                         PaymentService payments, SaleService sales, QuotationService quotations,
+                         SupplierService suppliers, PurchaseService purchases,
+                         ReturnService returns, ReportService reports)
         : base(loc)
     {
         _db = db; _settings = settings; _session = session; _products = products;
         _customers = customers; _payments = payments; _sales = sales; _quotations = quotations;
+        _suppliers = suppliers; _purchases = purchases; _returns = returns; _reports = reports;
 
         _loginVm = new LoginViewModel(loc, db, session);
         _loginVm.LoggedIn += user =>
@@ -80,25 +87,46 @@ public partial class MainViewModel : ViewModelBase
         CurrentView = _loginVm;
     }
 
+    private BillingViewModel CreateBilling()
+        => new(Loc, _products, _customers, _sales, _settings, _session);
+
     [RelayCommand]
     private void Navigate(string target)
     {
         if (!IsLoggedIn) return;
-        CurrentView = target switch
+        switch (target)
         {
-            "Dashboard" => new DashboardViewModel(Loc, _sales, _customers, _products, _session),
-            "Billing" => new BillingViewModel(Loc, _products, _customers, _sales, _settings, _session),
-            "Quotation" => new QuotationsViewModel(Loc, _products, _customers, _quotations, _settings, _session),
-            "Products" => new ProductsViewModel(Loc, _products, _session),
-            "Customers" => new CustomersViewModel(Loc, _customers, _payments, _session),
-            "Settings" => new SettingsViewModel(Loc, _settings, _db, this),
-            "Purchase" => new PlaceholderViewModel(Loc, S("NavPurchase"), S("Phase2")),
-            "Suppliers" => new PlaceholderViewModel(Loc, S("NavSuppliers"), S("Phase2")),
-            "Returns" => new PlaceholderViewModel(Loc, S("NavReturns"), S("Phase2")),
-            "Reports" => new PlaceholderViewModel(Loc, S("NavReports"), S("Phase2")),
-            "Users" => new PlaceholderViewModel(Loc, S("NavUsers"), S("Phase3")),
-            _ => CurrentView
-        };
+            case "Returns":
+            {
+                // Returns gets its own branch because an Exchange return hands
+                // over to Billing (see ReturnsViewModel.ExchangeReady).
+                var vm = new ReturnsViewModel(Loc, _returns, _customers, _session);
+                vm.ExchangeReady += prefill =>
+                {
+                    var billing = CreateBilling();
+                    billing.PrefillFromExchange(prefill.Customer, prefill.CreditPaisa, prefill.BillNo);
+                    CurrentView = billing;
+                };
+                CurrentView = vm;
+                break;
+            }
+            default:
+                CurrentView = target switch
+                {
+                    "Dashboard" => new DashboardViewModel(Loc, _sales, _customers, _products, _session),
+                    "Billing" => CreateBilling(),
+                    "Quotation" => new QuotationsViewModel(Loc, _products, _customers, _quotations, _settings, _session),
+                    "Products" => new ProductsViewModel(Loc, _products, _session),
+                    "Customers" => new CustomersViewModel(Loc, _customers, _payments, _session),
+                    "Purchase" => new PurchaseViewModel(Loc, _products, _suppliers, _purchases, _session),
+                    "Suppliers" => new SuppliersViewModel(Loc, _suppliers, _payments, _session),
+                    "Reports" => new ReportsViewModel(Loc, _reports, _customers, _suppliers, _settings, _session),
+                    "Settings" => new SettingsViewModel(Loc, _settings, _db, this),
+                    "Users" => new PlaceholderViewModel(Loc, S("NavUsers"), S("Phase3")),
+                    _ => CurrentView
+                };
+                break;
+        }
         // When Settings saves a new shop name, header must refresh: SettingsViewModel
         // calls back into RefreshShopNamePublic after saving.
     }

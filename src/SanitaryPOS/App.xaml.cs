@@ -34,13 +34,20 @@ public partial class App : Application
             var sales = new SaleService(db, stock);
             var quotations = new QuotationService(db, stock);
 
+            // Phase 2 services
+            var suppliers = new SupplierService(db);
+            var purchases = new PurchaseService(db, stock);
+            var returns = new ReturnService(db, stock);
+            var reports = new ReportService(db);
+
             // Language saved in Settings (default_language). Fall back to Urdu,
             // because most counter staff read Urdu better than English.
             string lang = settings.Get("default_language", "ur");
             localization.SetLanguage(lang == "en" ? "en" : "ur");
 
             var mainVm = new MainViewModel(db, settings, session, localization,
-                                           products, customers, payments, sales, quotations);
+                                           products, customers, payments, sales, quotations,
+                                           suppliers, purchases, returns, reports);
             var window = new MainWindow { DataContext = mainVm };
             localization.AttachMainWindow(window);
             window.Show();

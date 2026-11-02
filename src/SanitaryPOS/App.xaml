@@ -35,6 +35,18 @@
             <DataTemplate DataType="{x:Type vm:CustomersViewModel}">
                 <views:CustomersView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:PurchaseViewModel}">
+                <views:PurchaseView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SuppliersViewModel}">
+                <views:SuppliersView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ReturnsViewModel}">
+                <views:ReturnsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ReportsViewModel}">
+                <views:ReportsView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
                 <views:SettingsView/>
             </DataTemplate>

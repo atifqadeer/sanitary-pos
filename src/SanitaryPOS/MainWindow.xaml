@@ -58,13 +58,13 @@
                         Command="{Binding NavigateCommand}" CommandParameter="Customers"/>
                 <Separator Margin="8,6"/>
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavPurchase}"
-                        Command="{Binding NavigateCommand}" CommandParameter="Purchase" Opacity="0.55"/>
+                        Command="{Binding NavigateCommand}" CommandParameter="Purchase"/>
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavSuppliers}"
-                        Command="{Binding NavigateCommand}" CommandParameter="Suppliers" Opacity="0.55"/>
+                        Command="{Binding NavigateCommand}" CommandParameter="Suppliers"/>
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavReturns}"
-                        Command="{Binding NavigateCommand}" CommandParameter="Returns" Opacity="0.55"/>
+                        Command="{Binding NavigateCommand}" CommandParameter="Returns"/>
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavReports}"
-                        Command="{Binding NavigateCommand}" CommandParameter="Reports" Opacity="0.55"/>
+                        Command="{Binding NavigateCommand}" CommandParameter="Reports"/>
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavUsers}"
                         Command="{Binding NavigateCommand}" CommandParameter="Users" Opacity="0.55"/>
                 <Separator Margin="8,6"/>

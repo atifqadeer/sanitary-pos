@@ -154,7 +154,7 @@ public class CustomerService
     }
 }
 
-/// <summary>Payments received from customers (وصولی) and, in Phase 2, payments to suppliers.</summary>
+/// <summary>Payments received from customers (وصولی) and payments given to suppliers (Phase 2).</summary>
 public class PaymentService
 {
     private readonly DatabaseService _db;
@@ -178,5 +178,26 @@ public class PaymentService
         return conn.Query<Payment>(
             @"SELECT * FROM payments WHERE party_type = 'Customer' AND party_id = @id
               ORDER BY created_at DESC, id DESC", new { id = customerId }).ToList();
+    }
+
+    /// <summary>Phase 2: record money given TO a supplier (direction OUT). Drops their payable balance.</summary>
+    public long PaySupplier(long supplierId, long amountPaisa, string method,
+                            string? note, long? userId)
+    {
+        using var conn = _db.CreateConnection();
+        return conn.ExecuteScalar<long>(
+            @"INSERT INTO payments (party_type, party_id, direction, amount_paisa,
+                                    payment_method, note, user_id)
+              VALUES ('Supplier', @supplierId, 'OUT', @amountPaisa, @method, @note, @userId);
+              SELECT last_insert_rowid();",
+            new { supplierId, amountPaisa, method, note, userId });
+    }
+
+    public List<Payment> GetForSupplier(long supplierId)
+    {
+        using var conn = _db.CreateConnection();
+        return conn.Query<Payment>(
+            @"SELECT * FROM payments WHERE party_type = 'Supplier' AND party_id = @id
+              ORDER BY created_at DESC, id DESC", new { id = supplierId }).ToList();
     }
 }

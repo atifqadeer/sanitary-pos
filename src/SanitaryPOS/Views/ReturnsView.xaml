@@ -1,0 +1,84 @@
+<UserControl x:Class="SanitaryPOS.Views.ReturnsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="190"/>
+        </Grid.RowDefinitions>
+
+        <!-- ===== Top: load a bill, choose return qty + condition ===== -->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{DynamicResource ReturnsTitle}" Style="{StaticResource HeaderText}"/>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="{DynamicResource EnterBillNo}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBox x:Name="BillNoBox" Text="{Binding BillNoText}" Width="140" FontSize="16"
+                         Padding="6,4" KeyDown="BillNoBox_KeyDown"/>
+                <Button Content="{DynamicResource LoadBill}" Style="{StaticResource BigButton}"
+                        Command="{Binding LoadBillCommand}"/>
+                <TextBlock Text="{Binding SaleInfoText}" FontSize="14" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="14,0,0,0"/>
+            </StackPanel>
+
+            <DataGrid Grid.Row="2" ItemsSource="{Binding Lines}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" FontSize="13.5" Margin="0,8,0,0" RowHeight="30">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{DynamicResource Item}" Binding="{Binding ProductName}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource SoldQty}" Binding="{Binding SoldQty}" Width="75" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource AlreadyReturned}" Binding="{Binding AlreadyReturnedQty}" Width="105" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource ReturnQty}" Binding="{Binding ReturnQty, UpdateSourceTrigger=PropertyChanged}" Width="95"/>
+                    <DataGridTemplateColumn Header="{DynamicResource Condition}" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding DataContext.Conditions, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                          SelectedItem="{Binding Condition, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="{DynamicResource Rate}" Binding="{Binding EffectiveRatePaisa, Converter={StaticResource MoneyConverter}}" Width="105" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource LineTotal}" Binding="{Binding RefundPaisa, Converter={StaticResource MoneyConverter}}" Width="115" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
+                <TextBlock Text="{DynamicResource SettleMethod}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <ComboBox ItemsSource="{Binding SettleMethods}" SelectedItem="{Binding SelectedSettleMethod}"
+                          Width="150" FontSize="13"/>
+                <TextBlock FontSize="17" FontWeight="Bold" VerticalAlignment="Center" Margin="18,0,0,0">
+                    <Run Text="{DynamicResource RefundTotal}"/><Run Text=": "/>
+                    <Run Text="{Binding RefundTotalText, Mode=OneWay}"/>
+                </TextBlock>
+                <Button Content="{DynamicResource SaveReturn}" Style="{StaticResource PrimaryButton}"
+                        Command="{Binding SaveReturnCommand}" Margin="18,0,0,0" MinWidth="170"
+                        IsEnabled="{Binding HasLoadedSale}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ===== Bottom: returns history ===== -->
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{DynamicResource ReturnsHistory}" FontWeight="Bold" FontSize="14"/>
+            <DataGrid Grid.Row="1" ItemsSource="{Binding History}"
+                      AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" FontSize="13">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{DynamicResource Date}" Binding="{Binding CreatedAt, Converter={StaticResource DateConverter}}" Width="95"/>
+                    <DataGridTextColumn Header="{DynamicResource BillNo}" Binding="{Binding BillNo}" Width="85"/>
+                    <DataGridTextColumn Header="{DynamicResource Customer}" Binding="{Binding CustomerName}" Width="*"/>
+                    <DataGridTextColumn Header="{DynamicResource RefundTotal}" Binding="{Binding TotalRefundPaisa, Converter={StaticResource MoneyConverter}}" Width="115"/>
+                    <DataGridTextColumn Header="{DynamicResource SettleMethod}" Binding="{Binding SettleMethod}" Width="110"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

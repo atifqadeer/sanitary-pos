@@ -52,6 +52,16 @@ public partial class ProductsViewModel : ViewModelBase
     // ----- Quick price update -----
     [ObservableProperty] private string _quickPriceText = "";
 
+    // ----- Bulk price update (Phase 2, Admin only) -----
+    public string[] BulkPriceFields { get; } = { "Retail", "Trade", "Wholesale", "Purchase" };
+    [ObservableProperty] private Brand? _bulkBrand;
+    [ObservableProperty] private string _bulkField = "Retail";
+    [ObservableProperty] private string _bulkPercentText = "";
+    [ObservableProperty] private int _bulkAffectedCount;
+
+    partial void OnBulkBrandChanged(Brand? value)
+        => BulkAffectedCount = value == null ? 0 : _products.CountByBrand(value.Id);
+
     private long _editingId;
 
     public ProductsViewModel(LocalizationService loc, ProductService products, SessionService session)
@@ -179,6 +189,42 @@ public partial class ProductsViewModel : ViewModelBase
         if (SelectedProduct == null) return;
         long paisa = MoneyFormatter.ParseRupeesOrZero(QuickPriceText);
         _products.UpdateRetailPrice(SelectedProduct.Id, paisa);
+        LoadProducts();
+    }
+
+    /// <summary>
+    /// Phase 2 — Bulk price update for one whole brand. Admin only (a cashier
+    /// must never move prices in bulk). A bilingual confirmation is shown
+    /// BEFORE anything changes, naming the brand, the price field, the % and
+    /// how many products will change.
+    /// </summary>
+    [RelayCommand]
+    private void ApplyBulkPrice()
+    {
+        if (!IsAdmin) { Warn(S("AdminOnlyMsg")); return; }
+        if (BulkBrand == null) { Warn(S("SelectBrandMsg")); return; }
+        if (!double.TryParse(BulkPercentText, System.Globalization.NumberStyles.Number,
+                             System.Globalization.CultureInfo.InvariantCulture, out double percent)
+            || percent == 0)
+        {
+            Warn(S("BulkPercentRequiredMsg"));
+            return;
+        }
+
+        int count = _products.CountByBrand(BulkBrand.Id);
+        if (count == 0) { Warn(S("SelectBrandMsg")); return; }
+
+        string confirm = string.Format(S("BulkPriceConfirmMsg"),
+                                       BulkField, BulkBrand.Name, percent, count);
+        var answer = System.Windows.MessageBox.Show(
+            confirm, S("BulkPriceUpdate"),
+            System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question);
+        if (answer != System.Windows.MessageBoxResult.Yes) return;
+
+        int affected = _products.BulkUpdatePrices(BulkBrand.Id, BulkField, percent,
+                                                  _session.CurrentUser?.Id);
+        Info(string.Format(S("BulkPriceDoneMsg"), affected));
+        BulkAffectedCount = _products.CountByBrand(BulkBrand.Id);
         LoadProducts();
     }
 

@@ -1,11 +1,13 @@
 # Sanitary POS — Bilingual (Urdu/English) Desktop POS for Pakistan
 
-Status: Phase 1 code complete — WPF app in `src/` (login, dashboard, products, billing,
-quotations, customers/khata, settings, bilingual EN/UR engine, receipt + A4 printing).
-See `docs/PHASE1.md` for what was built, Windows run steps and the counter test checklist.
+Status: Phase 2 code complete — WPF app in `src/` (login, dashboard, products, billing,
+quotations, customers/khata, settings, bilingual EN/UR engine, receipt + A4 printing,
+plus purchase/GRN, suppliers & payables, returns & exchange, reports, bulk price update).
+See `docs/PHASE1.md` and `docs/PHASE2.md` for what was built, Windows run steps and the
+counter test checklists.
 Not yet compiled — first build happens on a Windows PC with Visual Studio 2022 (F5).
 First login: admin / admin123 (must be changed before live use).
-Next: Phase 2 (Purchase/GRN, Suppliers, Returns, Reports, exports).
+Next: Phase 3 (Users & Roles, scheduled backup, day-end, installer, FBR readiness).
 
 ## Folders
 - `docs/PLAN.md` — full plan: architecture, 14 screens, roles, build order, assumptions
