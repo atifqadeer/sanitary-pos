@@ -14,6 +14,8 @@ public class User
     public long IsActive { get; set; } = 1;
     public string CreatedAt { get; set; } = "";
     public bool IsAdmin => Role == "Admin";
+    /// <summary>Phase 3: bool view of IsActive for the Users grid checkbox column.</summary>
+    public bool IsActiveBool => IsActive == 1;
 }
 
 public class Brand

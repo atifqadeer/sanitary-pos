@@ -112,6 +112,10 @@
                                 <Button Content="{DynamicResource RecallBill}" Margin="10,0,0,0" Padding="10,2"
                                         Command="{Binding DataContext.RecallBillCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding}"/>
+                                <!-- Phase 3: drop a held bill for good (never touched stock, so this is a plain delete) -->
+                                <Button Content="{DynamicResource RemoveHeldBill}" Margin="6,0,0,0" Padding="10,2"
+                                        Command="{Binding DataContext.RemoveHeldBillCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

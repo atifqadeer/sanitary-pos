@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SanitaryPOS.Helpers;
@@ -31,6 +32,7 @@ public partial class ReturnsViewModel : ViewModelBase
     private readonly ReturnService _returns;
     private readonly CustomerService _customers;
     private readonly SessionService _session;
+    private readonly SaleService _sales;
 
     public ObservableCollection<ReturnLine> Lines { get; } = new();
     public ObservableCollection<SaleReturn> History { get; } = new();
@@ -42,6 +44,9 @@ public partial class ReturnsViewModel : ViewModelBase
     [ObservableProperty] private string _saleInfoText = "";
     [ObservableProperty] private string _selectedSettleMethod = "Cash";
 
+    // ----- Phase 3: cancel completed bill (Admin only) -----
+    [ObservableProperty] private string _cancelReason = "";
+
     private Sale? _loadedSale;
 
     /// <summary>Raised after an Exchange return is saved; the shell opens Billing with this prefill.</summary>
@@ -51,11 +56,16 @@ public partial class ReturnsViewModel : ViewModelBase
     public string RefundTotalText => MoneyFormatter.Format(RefundTotalPaisa);
     public bool HasLoadedSale => _loadedSale != null;
 
+    /// <summary>Cancel panel visibility: Admin only (the service refuses
+    /// nothing about roles — the rule lives here and in the view).</summary>
+    public bool IsAdmin => _session.IsAdmin;
+
     public ReturnsViewModel(LocalizationService loc, ReturnService returns,
-                            CustomerService customers, SessionService session)
+                            CustomerService customers, SessionService session,
+                            SaleService sales)
         : base(loc)
     {
-        _returns = returns; _customers = customers; _session = session;
+        _returns = returns; _customers = customers; _session = session; _sales = sales;
         Lines.CollectionChanged += (_, _) => HookLines();
         LoadHistory();
     }
@@ -190,5 +200,49 @@ public partial class ReturnsViewModel : ViewModelBase
     {
         History.Clear();
         foreach (var r in _returns.GetHistory()) History.Add(r);
+    }
+
+    /// <summary>
+    /// Phase 3 — Cancel the loaded COMPLETED bill (PLAN rule: Admin only,
+    /// reason compulsory, bill stays in the record as 'Cancelled').
+    /// Lives on this screen because it already loads a bill by number, and
+    /// the Billing screen is deliberately dense/no-scroll. The service does
+    /// status + reason + full stock reversal in ONE transaction, and
+    /// refuses bills that already have returns (see SaleService.CancelSale).
+    /// A bilingual Yes/No confirmation guards the button.
+    /// </summary>
+    [RelayCommand]
+    private void CancelBill()
+    {
+        if (!IsAdmin) { Warn(S("AdminOnlyMsg")); return; }
+        if (_loadedSale == null) { Warn(S("LoadBillFirstMsg")); return; }
+        if (string.IsNullOrWhiteSpace(CancelReason)) { Warn(S("CancelReasonRequiredMsg")); return; }
+
+        var answer = MessageBox.Show(
+            string.Format(S("CancelBillConfirmMsg"), _loadedSale.BillNo),
+            S("CancelBill"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        if (answer != MessageBoxResult.Yes) return;
+
+        try
+        {
+            _sales.CancelSale(_loadedSale.Id, CancelReason, _session.CurrentUser?.Id);
+        }
+        catch (Exception ex)
+        {
+            // Service refusals are localization keys; S() passes plain
+            // messages through unchanged.
+            Warn(S(ex.Message));
+            return;
+        }
+
+        Info(S("BillCancelledMsg"));
+        BillNoText = "";
+        Lines.Clear();
+        _loadedSale = null;
+        SaleInfoText = "";
+        CancelReason = "";
+        OnPropertyChanged(nameof(HasLoadedSale));
+        RefreshRefund();
+        LoadHistory();
     }
 }

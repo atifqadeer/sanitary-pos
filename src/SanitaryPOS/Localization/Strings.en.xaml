@@ -278,7 +278,7 @@
     <sys:String x:Key="BackupNow">Backup Now</sys:String>
     <sys:String x:Key="BackupDoneMsg">Backup done.</sys:String>
     <sys:String x:Key="SettingsSavedMsg">Settings saved.</sys:String>
-    <sys:String x:Key="ChangePasswordNote">First login is admin / admin123. Ask your developer to change it before live use (Users screen is Phase 3).</sys:String>
+    <sys:String x:Key="ChangePasswordNote">Change your own password above. The admin manages all users on the Users screen. First login is admin / admin123 — change it before live use.</sys:String>
 
     <!-- Printing (always bilingual in printouts, these are the English halves) -->
     <sys:String x:Key="ReceiptTitle">SALES RECEIPT</sys:String>
@@ -286,4 +286,73 @@
     <sys:String x:Key="ReceiptThankYou">Thank you for your business!</sys:String>
     <sys:String x:Key="Paid">Paid</sys:String>
     <sys:String x:Key="Balance">Balance</sys:String>
+
+    <!-- ===== Phase 3: Users & Roles ===== -->
+    <sys:String x:Key="NavDayEnd">Day-End Closing</sys:String>
+    <sys:String x:Key="UsersTitle">Users &amp; Roles</sys:String>
+    <sys:String x:Key="FullName">Full Name</sys:String>
+    <sys:String x:Key="RoleWord">Role</sys:String>
+    <sys:String x:Key="ActiveWord">Active</sys:String>
+    <sys:String x:Key="NewUser">New User</sys:String>
+    <sys:String x:Key="NewPassword">New Password</sys:String>
+    <sys:String x:Key="ResetPassword">Reset Password</sys:String>
+    <sys:String x:Key="Activate">Activate</sys:String>
+    <sys:String x:Key="Deactivate">Deactivate</sys:String>
+    <sys:String x:Key="UserSavedMsg">User saved.</sys:String>
+    <sys:String x:Key="UsernameRequiredMsg">Username and password are required.</sys:String>
+    <sys:String x:Key="UsernameExistsMsg">This username is already used. Please choose another.</sys:String>
+    <sys:String x:Key="CannotDeactivateYourselfMsg">You cannot deactivate your own account.</sys:String>
+    <sys:String x:Key="CannotDeactivateLastAdminMsg">The last active Admin cannot be deactivated or changed.</sys:String>
+    <sys:String x:Key="PasswordChangedMsg">Password changed.</sys:String>
+
+    <!-- ===== Phase 3: Change Password + default-password warning ===== -->
+    <sys:String x:Key="ChangePassword">Change Password</sys:String>
+    <sys:String x:Key="CurrentPassword">Current Password</sys:String>
+    <sys:String x:Key="ConfirmPassword">Confirm New Password</sys:String>
+    <sys:String x:Key="PasswordMismatchMsg">New password and confirmation do not match.</sys:String>
+    <sys:String x:Key="WrongCurrentPasswordMsg">Current password is wrong.</sys:String>
+    <sys:String x:Key="PasswordTooShortMsg">Password must be at least 4 characters.</sys:String>
+    <sys:String x:Key="DefaultPasswordWarning">SAFETY: The admin account is still using the default password admin123. Please change it now — Settings → Change Password, or the Users screen.</sys:String>
+
+    <!-- ===== Phase 3: Scheduled auto-backup ===== -->
+    <sys:String x:Key="AutoBackup">Automatic Daily Backup</sys:String>
+    <sys:String x:Key="BackupTime">Backup Time (HH:mm)</sys:String>
+    <sys:String x:Key="KeepBackups">Keep Last (count)</sys:String>
+    <sys:String x:Key="LastBackup">Last Backup</sys:String>
+    <sys:String x:Key="NeverBackup">Not yet</sys:String>
+
+    <!-- ===== Phase 3: Day-End Closing ===== -->
+    <sys:String x:Key="DayEndTitle">Day-End Closing</sys:String>
+    <sys:String x:Key="ZReportTitle">Z Report — Day Closing</sys:String>
+    <sys:String x:Key="DayTotalSales">Total Sales</sys:String>
+    <sys:String x:Key="CustomerReceiptsDay">Payments Received (Customers)</sys:String>
+    <sys:String x:Key="SupplierPaymentsDay">Payments Given (Suppliers)</sys:String>
+    <sys:String x:Key="ReturnsTotalDay">Returns Total</sys:String>
+    <sys:String x:Key="CashSalesPaid">Cash Sales (paid at bill time)</sys:String>
+    <sys:String x:Key="CashReceiptsDay">Cash Received from Customers</sys:String>
+    <sys:String x:Key="CashPaidSuppliersDay">Cash Paid to Suppliers</sys:String>
+    <sys:String x:Key="CashRefundsDay">Cash Refunds</sys:String>
+    <sys:String x:Key="MixedPaidNotCounted">Mixed-method Bills Paid (NOT counted in Expected Cash)</sys:String>
+    <sys:String x:Key="ExpectedCash">Expected Cash</sys:String>
+    <sys:String x:Key="CountedCash">Counted Cash</sys:String>
+    <sys:String x:Key="Difference">Difference</sys:String>
+    <sys:String x:Key="CloseDay">Close Day</sys:String>
+    <sys:String x:Key="DayClosedMsg">Day closed.</sys:String>
+    <sys:String x:Key="AlreadyClosedMsg">This day is already closed.</sys:String>
+    <sys:String x:Key="CountedCashRequiredMsg">Please enter the counted cash.</sys:String>
+    <sys:String x:Key="PrintZReport">Print Z Report</sys:String>
+    <sys:String x:Key="ClosingsHistory">Past Closings</sys:String>
+    <sys:String x:Key="ClosedBy">Closed By</sys:String>
+    <sys:String x:Key="SalesByMethod">Sales by Payment Method</sys:String>
+    <sys:String x:Key="ExpectedCashNote">Expected Cash = cash sales paid at bill time + cash received from customers − cash paid to suppliers − cash refunds. Mixed-method bills are not counted (their cash part is not recorded separately). Any money kept in the drawer as float is also not counted, so a small difference can be normal.</sys:String>
+
+    <!-- ===== Phase 3: Cancel Bill ===== -->
+    <sys:String x:Key="CancelBill">Cancel Bill</sys:String>
+    <sys:String x:Key="CancelReason">Reason</sys:String>
+    <sys:String x:Key="CancelBillConfirmMsg">Cancel bill #{0}? Its full stock will come back and the bill will stay on record as Cancelled. This cannot be undone.</sys:String>
+    <sys:String x:Key="BillCancelledMsg">Bill cancelled. Stock has been restored.</sys:String>
+    <sys:String x:Key="CancelReasonRequiredMsg">Please write the cancellation reason.</sys:String>
+    <sys:String x:Key="BillHasReturnsMsg">This bill already has returns recorded. It cannot be cancelled.</sys:String>
+    <sys:String x:Key="BillNotCancellableMsg">This bill cannot be cancelled (it is not a completed bill).</sys:String>
+    <sys:String x:Key="RemoveHeldBill">Remove</sys:String>
 </ResourceDictionary>

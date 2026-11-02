@@ -1,19 +1,22 @@
 # Sanitary POS — Bilingual (Urdu/English) Desktop POS for Pakistan
 
-Status: Phase 2 code complete — WPF app in `src/` (login, dashboard, products, billing,
-quotations, customers/khata, settings, bilingual EN/UR engine, receipt + A4 printing,
-plus purchase/GRN, suppliers & payables, returns & exchange, reports, bulk price update).
-See `docs/PHASE1.md` and `docs/PHASE2.md` for what was built, Windows run steps and the
-counter test checklists.
+Status: **Phase 3 complete — all planned phases done.** WPF app in `src/` (login,
+dashboard, products, billing, quotations, customers/khata, settings, bilingual EN/UR
+engine, receipt + A4 printing, purchase/GRN, suppliers & payables, returns & exchange,
+reports, bulk price update — plus users & roles, scheduled auto-backup, day-end
+closing with Z-report, bill cancellation, and an Inno Setup installer in `installer/`).
+See `docs/PHASE1.md`, `docs/PHASE2.md` and `docs/PHASE3.md` for what was built,
+Windows run steps and the counter test checklists (PHASE3.md ends with a Go-Live
+checklist).
 Not yet compiled — first build happens on a Windows PC with Visual Studio 2022 (F5).
-First login: admin / admin123 (must be changed before live use).
-Next: Phase 3 (Users & Roles, scheduled backup, day-end, installer, FBR readiness).
+First login: admin / admin123 (must be changed before live use — the app shows a
+warning banner until it is).
 
 ## Folders
 - `docs/PLAN.md` — full plan: architecture, 14 screens, roles, build order, assumptions
 - `database/schema.sql` — complete SQLite schema (19 tables) + seed data (units, categories, settings)
 - `src/SanitaryPOS/` — WPF app will live here (Models, Data, Services, Localization, ViewModels, Views, Printing, Helpers)
-- `installer/` — Inno Setup script will go here in Phase 3
+- `installer/` — Inno Setup script (`SanitaryPOS.iss`) + `BUILD-INSTALLER.md` (publish → package steps)
 
 ## To open/build (on Windows, when code lands)
 1. Install Visual Studio 2022 Community (free) with ".NET desktop development".

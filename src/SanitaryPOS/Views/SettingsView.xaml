@@ -45,15 +45,52 @@
             <TextBlock Text="{DynamicResource A4Printer}" Style="{StaticResource FormLabel}"/>
             <TextBox Text="{Binding A4Printer}" Style="{StaticResource FormTextBox}"/>
 
-            <TextBlock Text="{DynamicResource BackupFolder}" Style="{StaticResource FormLabel}"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding BackupFolder}" Style="{StaticResource FormTextBox}" Width="400"/>
-                <Button Content="{DynamicResource BackupNow}" Style="{StaticResource BigButton}"
-                        Command="{Binding BackupNowCommand}"/>
+            <!-- Phase 3: whole backup area is ADMIN-ONLY. SettingsView code-behind
+                 hides this panel for Cashier (shop info above stays visible). -->
+            <StackPanel x:Name="BackupPanel">
+                <TextBlock Text="{DynamicResource BackupFolder}" Style="{StaticResource FormLabel}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding BackupFolder}" Style="{StaticResource FormTextBox}" Width="400"/>
+                    <Button Content="{DynamicResource BackupNow}" Style="{StaticResource BigButton}"
+                            Command="{Binding BackupNowCommand}"/>
+                </StackPanel>
+
+                <TextBlock Text="{DynamicResource AutoBackup}" Style="{StaticResource FormLabel}"
+                           FontWeight="Bold" Margin="0,12,0,2"/>
+                <CheckBox Content="{DynamicResource AutoBackup}" IsChecked="{Binding AutoBackupEnabled}"
+                          Margin="0,4,0,0"/>
+                <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                    <TextBlock Text="{DynamicResource BackupTime}" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding BackupTimeText}" Width="80" Style="{StaticResource FormTextBox}" Margin="6,0,0,0"/>
+                    <TextBlock Text="{DynamicResource KeepBackups}" VerticalAlignment="Center" Margin="18,0,0,0"/>
+                    <TextBox Text="{Binding KeepBackupsText}" Width="60" Style="{StaticResource FormTextBox}" Margin="6,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                    <TextBlock Text="{DynamicResource LastBackup}" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding LastBackupText}" Margin="6,0,0,0"/>
+                </StackPanel>
             </StackPanel>
 
             <Button Content="{DynamicResource Save}" Style="{StaticResource PrimaryButton}"
                     Command="{Binding SaveSettingsCommand}" HorizontalAlignment="Left" MinWidth="160" Margin="0,10,0,0"/>
+
+            <!-- Phase 3: Change MY Password — visible to everyone (this is the
+                 Cashier's password route; Admins also have the Users screen).
+                 PasswordBoxes feed the VM via code-behind (Login pattern). -->
+            <TextBlock Text="{DynamicResource ChangePassword}" Style="{StaticResource FormLabel}"
+                       FontWeight="Bold" FontSize="15" Margin="0,22,0,2"/>
+            <TextBlock Text="{DynamicResource CurrentPassword}" Style="{StaticResource FormLabel}"/>
+            <PasswordBox x:Name="MyCurrentBox" FontSize="14" Padding="6,4" Margin="0,0,0,6"
+                         PasswordChanged="MyCurrentBox_PasswordChanged"/>
+            <TextBlock Text="{DynamicResource NewPassword}" Style="{StaticResource FormLabel}"/>
+            <PasswordBox x:Name="MyNewBox" FontSize="14" Padding="6,4" Margin="0,0,0,6"
+                         PasswordChanged="MyNewBox_PasswordChanged"/>
+            <TextBlock Text="{DynamicResource ConfirmPassword}" Style="{StaticResource FormLabel}"/>
+            <PasswordBox x:Name="MyConfirmBox" FontSize="14" Padding="6,4" Margin="0,0,0,6"
+                         PasswordChanged="MyConfirmBox_PasswordChanged"/>
+            <Button Content="{DynamicResource ChangePassword}" Style="{StaticResource PrimaryButton}"
+                    Command="{Binding ChangeMyPasswordCommand}" HorizontalAlignment="Left"
+                    MinWidth="160" Margin="0,8,0,0"/>
 
             <TextBlock Text="{DynamicResource ChangePasswordNote}" TextWrapping="Wrap"
                        Foreground="#888" FontSize="12" Margin="0,16,0,0"/>

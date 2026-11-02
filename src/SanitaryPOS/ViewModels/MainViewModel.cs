@@ -9,8 +9,11 @@ namespace SanitaryPOS.ViewModels;
 /// <summary>
 /// Shell ViewModel: sidebar navigation + header language toggle.
 /// Navigation simply swaps CurrentView; App.xaml DataTemplates pick the View.
-/// Phase 2 screens (Purchase, Suppliers, Returns, Reports) are real since
-/// Phase 2; Users stays a Phase 3 placeholder for now.
+/// Phase 3: all screens are real now. Role rules at this layer: the Users
+/// sidebar button is hidden for Cashier AND Navigate("Users") refuses to
+/// build the screen for a Cashier; the default-password warning banner
+/// (ShowDefaultPasswordWarning) shows while the seeded admin still uses
+/// admin123 — see DatabaseService.ApplyMigrations for the flag.
 /// </summary>
 public partial class MainViewModel : ViewModelBase
 {
@@ -26,11 +29,14 @@ public partial class MainViewModel : ViewModelBase
     private readonly PurchaseService _purchases;
     private readonly ReturnService _returns;
     private readonly ReportService _reports;
+    private readonly UserService _users;
+    private readonly DayEndService _dayEnd;
 
     [ObservableProperty] private object? _currentView;
     [ObservableProperty] private bool _isLoggedIn;
     [ObservableProperty] private string _currentUserText = "";
     [ObservableProperty] private string _shopNameText = "";
+    [ObservableProperty] private bool _showDefaultPasswordWarning;
 
     public bool IsAdmin => _session.IsAdmin;
     public bool IsUrdu => Loc.IsUrdu;
@@ -41,12 +47,14 @@ public partial class MainViewModel : ViewModelBase
                          LocalizationService loc, ProductService products, CustomerService customers,
                          PaymentService payments, SaleService sales, QuotationService quotations,
                          SupplierService suppliers, PurchaseService purchases,
-                         ReturnService returns, ReportService reports)
+                         ReturnService returns, ReportService reports,
+                         UserService users, DayEndService dayEnd)
         : base(loc)
     {
         _db = db; _settings = settings; _session = session; _products = products;
         _customers = customers; _payments = payments; _sales = sales; _quotations = quotations;
         _suppliers = suppliers; _purchases = purchases; _returns = returns; _reports = reports;
+        _users = users; _dayEnd = dayEnd;
 
         _loginVm = new LoginViewModel(loc, db, session);
         _loginVm.LoggedIn += user =>
@@ -55,6 +63,7 @@ public partial class MainViewModel : ViewModelBase
             CurrentUserText = $"{user.FullName} ({user.Role})";
             OnPropertyChanged(nameof(IsAdmin));
             RefreshShopName();
+            RefreshPasswordWarning();
             Navigate("Dashboard");
         };
 
@@ -84,8 +93,22 @@ public partial class MainViewModel : ViewModelBase
         _session.SignOut();
         IsLoggedIn = false;
         CurrentUserText = "";
+        ShowDefaultPasswordWarning = false;
         CurrentView = _loginVm;
     }
+
+    /// <summary>
+    /// The banner is shown only while someone is logged in AND the seeded
+    /// 'admin' account still uses the default password (settings flag kept
+    /// true-to-life by DatabaseService at startup and by UserService the
+    /// moment a password changes).
+    /// </summary>
+    private void RefreshPasswordWarning()
+        => ShowDefaultPasswordWarning = IsLoggedIn
+           && _settings.Get("admin_default_password", "0") == "1";
+
+    /// <summary>Called by Users/Settings screens right after a password change.</summary>
+    public void RefreshPasswordWarningPublic() => RefreshPasswordWarning();
 
     private BillingViewModel CreateBilling()
         => new(Loc, _products, _customers, _sales, _settings, _session);
@@ -100,7 +123,9 @@ public partial class MainViewModel : ViewModelBase
             {
                 // Returns gets its own branch because an Exchange return hands
                 // over to Billing (see ReturnsViewModel.ExchangeReady).
-                var vm = new ReturnsViewModel(Loc, _returns, _customers, _session);
+                // Phase 3: it also receives SaleService for the Admin
+                // Cancel-Bill flow that lives on this screen.
+                var vm = new ReturnsViewModel(Loc, _returns, _customers, _session, _sales);
                 vm.ExchangeReady += prefill =>
                 {
                     var billing = CreateBilling();
@@ -113,7 +138,7 @@ public partial class MainViewModel : ViewModelBase
             default:
                 CurrentView = target switch
                 {
-                    "Dashboard" => new DashboardViewModel(Loc, _sales, _customers, _products, _session),
+                    "Dashboard" => new DashboardViewModel(Loc, _sales, _customers, _products, _session, _settings),
                     "Billing" => CreateBilling(),
                     "Quotation" => new QuotationsViewModel(Loc, _products, _customers, _quotations, _settings, _session),
                     "Products" => new ProductsViewModel(Loc, _products, _session),
@@ -121,8 +146,13 @@ public partial class MainViewModel : ViewModelBase
                     "Purchase" => new PurchaseViewModel(Loc, _products, _suppliers, _purchases, _session),
                     "Suppliers" => new SuppliersViewModel(Loc, _suppliers, _payments, _session),
                     "Reports" => new ReportsViewModel(Loc, _reports, _customers, _suppliers, _settings, _session),
-                    "Settings" => new SettingsViewModel(Loc, _settings, _db, this),
-                    "Users" => new PlaceholderViewModel(Loc, S("NavUsers"), S("Phase3")),
+                    // Users is Admin-only: a Cashier never gets the real screen
+                    // (the sidebar button is hidden for them too).
+                    "Users" => _session.IsAdmin
+                        ? new UsersViewModel(Loc, _users, _session, this)
+                        : new PlaceholderViewModel(Loc, S("NavUsers"), S("AdminOnlyMsg")),
+                    "DayEnd" => new DayEndViewModel(Loc, _dayEnd, _settings, _session),
+                    "Settings" => new SettingsViewModel(Loc, _settings, _db, this, _session, _users),
                     _ => CurrentView
                 };
                 break;

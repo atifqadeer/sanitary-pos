@@ -255,3 +255,27 @@ INSERT INTO settings (key, value) VALUES
  ('shop_address',''),('shop_phone',''),('shop_whatsapp',''),
  ('tax_enabled','0'),('tax_rate_percent','0'),
  ('default_language','ur'),('quotation_valid_days','7');
+
+-- ========= PHASE 3: DAY-END CLOSINGS =========
+-- Added in Phase 3. DatabaseService ALSO creates this table with
+-- CREATE TABLE IF NOT EXISTS on every startup (migration), so databases
+-- created by Phase 1/2 builds gain it automatically — nothing breaks.
+-- One row per closed day; the summary figures themselves are always
+-- re-derived from sales/payments/returns, this table only stores what the
+-- counter actually counted + the expected figure at closing time.
+CREATE TABLE IF NOT EXISTS day_closings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  closing_date TEXT NOT NULL UNIQUE,          -- 'yyyy-MM-dd' (local shop date)
+  expected_paisa INTEGER NOT NULL DEFAULT 0,  -- expected cash per the formula in DayEndService
+  counted_paisa INTEGER NOT NULL DEFAULT 0,   -- cash physically counted in the drawer
+  difference_paisa INTEGER NOT NULL DEFAULT 0,-- counted - expected
+  note TEXT,
+  user_id INTEGER REFERENCES users(id),       -- who closed the day (Admin)
+  created_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
+);
+-- Phase 3 settings keys (also inserted with INSERT OR IGNORE by the migration
+-- in DatabaseService, for databases that pre-date Phase 3):
+-- admin_default_password (1 while the seeded 'admin' still uses admin123),
+-- backup_auto_enabled (0/1), backup_time ('HH:mm', default 21:00),
+-- backup_keep_count (default 30), last_backup_date ('yyyy-MM-dd'),
+-- last_backup_at ('yyyy-MM-dd HH:mm:ss')

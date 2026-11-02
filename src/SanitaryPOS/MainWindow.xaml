@@ -8,6 +8,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="56"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -42,8 +43,16 @@
             </Grid>
         </Border>
 
+        <!-- ===== Phase 3: default-password warning banner (admin still on admin123) ===== -->
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#FCE4EC"
+                BorderBrush="#C62828" BorderThickness="0,0,0,1" Padding="12,7"
+                Visibility="{Binding ShowDefaultPasswordWarning, Converter={StaticResource BoolToVis}}">
+            <TextBlock Text="{DynamicResource DefaultPasswordWarning}" Foreground="#B71C1C"
+                       FontWeight="Bold" FontSize="13.5" TextWrapping="Wrap"/>
+        </Border>
+
         <!-- ===== Sidebar (hidden until login) ===== -->
-        <Border Grid.Row="1" Grid.Column="0" Background="White" BorderBrush="#DDD" BorderThickness="0,0,1,0"
+        <Border Grid.Row="2" Grid.Column="0" Background="White" BorderBrush="#DDD" BorderThickness="0,0,1,0"
                 Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}">
             <StackPanel Width="205">
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavDashboard}"
@@ -65,8 +74,13 @@
                         Command="{Binding NavigateCommand}" CommandParameter="Returns"/>
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavReports}"
                         Command="{Binding NavigateCommand}" CommandParameter="Reports"/>
+                <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavDayEnd}"
+                        Command="{Binding NavigateCommand}" CommandParameter="DayEnd"/>
+                <!-- Users & Roles is Admin-only: hidden for Cashier, and
+                     Navigate("Users") refuses to build it for them too. -->
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavUsers}"
-                        Command="{Binding NavigateCommand}" CommandParameter="Users" Opacity="0.55"/>
+                        Command="{Binding NavigateCommand}" CommandParameter="Users"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}"/>
                 <Separator Margin="8,6"/>
                 <Button Style="{StaticResource NavButton}" Content="{DynamicResource NavSettings}"
                         Command="{Binding NavigateCommand}" CommandParameter="Settings"/>
@@ -74,6 +88,6 @@
         </Border>
 
         <!-- ===== Current screen ===== -->
-        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentView}" Margin="10"/>
+        <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding CurrentView}" Margin="10"/>
     </Grid>
 </Window>

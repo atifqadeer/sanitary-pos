@@ -14,6 +14,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="{DynamicResource ReturnsTitle}" Style="{StaticResource HeaderText}"/>
@@ -60,6 +61,23 @@
                         Command="{Binding SaveReturnCommand}" Margin="18,0,0,0" MinWidth="170"
                         IsEnabled="{Binding HasLoadedSale}"/>
             </StackPanel>
+
+            <!-- Phase 3: Cancel Bill (Admin only). Cancels the loaded COMPLETED
+                 bill with a compulsory reason; the bill stays on record as
+                 Cancelled and its stock comes back — see SaleService.CancelSale. -->
+            <Border Grid.Row="4" Background="#FCE4EC" BorderBrush="#C62828" BorderThickness="1"
+                    Padding="8" Margin="0,8,0,0"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource CancelBill}" FontWeight="Bold" Foreground="#B71C1C"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource CancelReason}" VerticalAlignment="Center" Margin="14,0,6,0"/>
+                    <TextBox Text="{Binding CancelReason}" Width="320" FontSize="14" Padding="6,4"/>
+                    <Button Content="{DynamicResource CancelBill}" Style="{StaticResource BigButton}"
+                            Command="{Binding CancelBillCommand}" Margin="12,0,0,0"
+                            IsEnabled="{Binding HasLoadedSale}"/>
+                </StackPanel>
+            </Border>
         </Grid>
 
         <!-- ===== Bottom: returns history ===== -->

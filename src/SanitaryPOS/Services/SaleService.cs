@@ -88,6 +88,60 @@ public class SaleService
         tx.Commit();
     }
 
+    /// <summary>
+    /// Phase 3 — Cancel a COMPLETED bill (Admin only; the screen asks for a
+    /// reason first — see ReturnsViewModel). ONE transaction:
+    /// - the sale stays in the table with status='Cancelled' + cancel_reason
+    ///   (audit trail — bills are never deleted, per PLAN.md);
+    /// - every item's stock comes back through StockService as a
+    ///   'SaleReturn' movement (+qty), exactly like a full return;
+    /// - the customer's khata fixes itself: CustomerService.ComputeBalance
+    ///   only counts status='Completed' bills, so the cancelled bill's
+    ///   unpaid share simply stops counting.
+    /// Known edge (documented in PHASE3.md): a later payment received
+    /// against this bill (payments row with sale_id set) is NOT reversed —
+    /// it stays as a credit on the customer's khata for the owner to settle.
+    /// Refusals (thrown as localization keys, the screen translates them):
+    /// bill not Completed, or the bill already has returns recorded
+    /// (cancelling it would double-restore stock / double-refund).
+    /// </summary>
+    public void CancelSale(long saleId, string reason, long? userId)
+    {
+        if (string.IsNullOrWhiteSpace(reason))
+            throw new InvalidOperationException("CancelReasonRequiredMsg");
+
+        using var conn = _db.CreateConnection();
+        using var tx = conn.BeginTransaction();
+
+        var sale = conn.QueryFirstOrDefault<Sale>(
+            "SELECT * FROM sales WHERE id = @id", new { id = saleId }, tx);
+        if (sale == null || sale.Status != "Completed")
+            throw new InvalidOperationException("BillNotCancellableMsg");
+
+        long returnsCount = conn.ExecuteScalar<long>(
+            "SELECT COUNT(*) FROM returns WHERE sale_id = @id", new { id = saleId }, tx);
+        if (returnsCount > 0)
+            throw new InvalidOperationException("BillHasReturnsMsg");
+
+        var items = conn.Query<SaleItem>(
+            "SELECT * FROM sale_items WHERE sale_id = @id ORDER BY id",
+            new { id = saleId }, tx).ToList();
+
+        conn.Execute(
+            @"UPDATE sales SET status = 'Cancelled', cancel_reason = @reason
+              WHERE id = @id AND status = 'Completed'",
+            new { id = saleId, reason = reason.Trim() }, tx);
+
+        foreach (var item in items)
+        {
+            _stock.ApplyMovement(conn, tx, item.ProductId, "SaleReturn", item.Qty,
+                                 "Sale", sale.Id, userId,
+                                 $"Cancelled Bill #{sale.BillNo}: {reason.Trim()}");
+        }
+
+        tx.Commit();
+    }
+
     public SaleDetail? GetSale(long saleId)
     {
         using var conn = _db.CreateConnection();

@@ -46,5 +46,9 @@
                 </StackPanel>
             </Border>
         </WrapPanel>
+
+        <!-- Phase 3: last-backup status (hidden until the first backup exists) -->
+        <TextBlock Text="{Binding BackupStatusText}" Foreground="#555" FontSize="13" Margin="4,10,0,0"
+                   Visibility="{Binding HasBackupStatus, Converter={StaticResource BoolToVis}}"/>
     </StackPanel>
 </UserControl>

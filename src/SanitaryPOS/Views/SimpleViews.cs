@@ -16,10 +16,8 @@ public partial class PlaceholderView : UserControl
     public PlaceholderView() => InitializeComponent();
 }
 
-public partial class SettingsView : UserControl
-{
-    public SettingsView() => InitializeComponent();
-}
+// SettingsView moved to its own SettingsView.xaml.cs in Phase 3
+// (it now needs Loaded logic + PasswordBox handlers).
 
 // Phase 2 views with no code-behind logic of their own.
 
@@ -31,4 +29,11 @@ public partial class SuppliersView : UserControl
 public partial class ReportsView : UserControl
 {
     public ReportsView() => InitializeComponent();
+}
+
+// Phase 3 view with no code-behind logic of its own.
+
+public partial class DayEndView : UserControl
+{
+    public DayEndView() => InitializeComponent();
 }

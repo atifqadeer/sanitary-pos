@@ -279,7 +279,7 @@
     <sys:String x:Key="BackupNow">ابھی بیک اپ لیں</sys:String>
     <sys:String x:Key="BackupDoneMsg">بیک اپ ہو گیا۔</sys:String>
     <sys:String x:Key="SettingsSavedMsg">ترتیبات محفوظ ہو گئیں۔</sys:String>
-    <sys:String x:Key="ChangePasswordNote">پہلا لاگ ان admin / admin123 ہے۔ لائیو استعمال سے پہلے ڈویلپر سے اسے بدلوائیں (صارفین اسکرین مرحلہ 3 میں ہے)۔</sys:String>
+    <sys:String x:Key="ChangePasswordNote">اپنا پاس ورڈ اوپر سے بدلیں۔ تمام صارفین کا انتظام ایڈمن صارفین اسکرین سے کرتا ہے۔ پہلا لاگ ان admin / admin123 ہے — لائیو استعمال سے پہلے اسے بدل لیں۔</sys:String>
 
     <!-- Printing — always bilingual on paper -->
     <sys:String x:Key="ReceiptTitle">سیلز رسید</sys:String>
@@ -287,4 +287,73 @@
     <sys:String x:Key="ReceiptThankYou">آپ کے کاروبار کا شکریہ!</sys:String>
     <sys:String x:Key="Paid">وصول</sys:String>
     <sys:String x:Key="Balance">بقایا</sys:String>
+
+    <!-- ===== مرحلہ 3: صارفین اور عہدے ===== -->
+    <sys:String x:Key="NavDayEnd">دن کا اختتام</sys:String>
+    <sys:String x:Key="UsersTitle">صارفین اور عہدے</sys:String>
+    <sys:String x:Key="FullName">پورا نام</sys:String>
+    <sys:String x:Key="RoleWord">عہدہ</sys:String>
+    <sys:String x:Key="ActiveWord">فعال</sys:String>
+    <sys:String x:Key="NewUser">نیا صارف</sys:String>
+    <sys:String x:Key="NewPassword">نیا پاس ورڈ</sys:String>
+    <sys:String x:Key="ResetPassword">پاس ورڈ دوبارہ سیٹ کریں</sys:String>
+    <sys:String x:Key="Activate">فعال کریں</sys:String>
+    <sys:String x:Key="Deactivate">غیر فعال کریں</sys:String>
+    <sys:String x:Key="UserSavedMsg">صارف محفوظ ہو گیا۔</sys:String>
+    <sys:String x:Key="UsernameRequiredMsg">صارف نام اور پاس ورڈ لازمی ہیں۔</sys:String>
+    <sys:String x:Key="UsernameExistsMsg">یہ صارف نام پہلے سے استعمال میں ہے۔ کوئی اور منتخب کریں۔</sys:String>
+    <sys:String x:Key="CannotDeactivateYourselfMsg">آپ اپنا اکاؤنٹ خود غیر فعال نہیں کر سکتے۔</sys:String>
+    <sys:String x:Key="CannotDeactivateLastAdminMsg">آخری فعال ایڈمن کو غیر فعال یا تبدیل نہیں کیا جا سکتا۔</sys:String>
+    <sys:String x:Key="PasswordChangedMsg">پاس ورڈ تبدیل ہو گیا۔</sys:String>
+
+    <!-- ===== مرحلہ 3: پاس ورڈ تبدیلی + ڈیفالٹ پاس ورڈ تنبیہ ===== -->
+    <sys:String x:Key="ChangePassword">پاس ورڈ بدلیں</sys:String>
+    <sys:String x:Key="CurrentPassword">موجودہ پاس ورڈ</sys:String>
+    <sys:String x:Key="ConfirmPassword">نیا پاس ورڈ دوبارہ لکھیں</sys:String>
+    <sys:String x:Key="PasswordMismatchMsg">نیا پاس ورڈ اور اس کی تصدیق ایک جیسی نہیں ہے۔</sys:String>
+    <sys:String x:Key="WrongCurrentPasswordMsg">موجودہ پاس ورڈ غلط ہے۔</sys:String>
+    <sys:String x:Key="PasswordTooShortMsg">پاس ورڈ کم از کم 4 حروف کا ہو۔</sys:String>
+    <sys:String x:Key="DefaultPasswordWarning">حفاظتی تنبیہ: ایڈمن اکاؤنٹ اب بھی ڈیفالٹ پاس ورڈ admin123 پر ہے۔ براہ کرم ابھی اسے بدلیں — ترتیبات ← پاس ورڈ بدلیں، یا صارفین اسکرین سے۔</sys:String>
+
+    <!-- ===== مرحلہ 3: خودکار روزانہ بیک اپ ===== -->
+    <sys:String x:Key="AutoBackup">روزانہ خودکار بیک اپ</sys:String>
+    <sys:String x:Key="BackupTime">بیک اپ کا وقت (HH:mm)</sys:String>
+    <sys:String x:Key="KeepBackups">آخری کتنے بیک اپ رکھیں (تعداد)</sys:String>
+    <sys:String x:Key="LastBackup">آخری بیک اپ</sys:String>
+    <sys:String x:Key="NeverBackup">ابھی نہیں ہوا</sys:String>
+
+    <!-- ===== مرحلہ 3: دن کا اختتام ===== -->
+    <sys:String x:Key="DayEndTitle">دن کا اختتام</sys:String>
+    <sys:String x:Key="ZReportTitle">زیڈ رپورٹ — دن کا اختتام</sys:String>
+    <sys:String x:Key="DayTotalSales">کل فروخت</sys:String>
+    <sys:String x:Key="CustomerReceiptsDay">گاہکوں سے وصولی</sys:String>
+    <sys:String x:Key="SupplierPaymentsDay">سپلائر کو ادائیگی</sys:String>
+    <sys:String x:Key="ReturnsTotalDay">واپسی کل</sys:String>
+    <sys:String x:Key="CashSalesPaid">نقد فروخت (بل کے وقت وصول)</sys:String>
+    <sys:String x:Key="CashReceiptsDay">گاہکوں سے نقد وصولی</sys:String>
+    <sys:String x:Key="CashPaidSuppliersDay">سپلائر کو نقد ادائیگی</sys:String>
+    <sys:String x:Key="CashRefundsDay">نقد رقم واپسی</sys:String>
+    <sys:String x:Key="MixedPaidNotCounted">ملے جلے طریقے کے بل وصول (متوقع نقدی میں شامل نہیں)</sys:String>
+    <sys:String x:Key="ExpectedCash">متوقع نقدی</sys:String>
+    <sys:String x:Key="CountedCash">گنی ہوئی نقدی</sys:String>
+    <sys:String x:Key="Difference">فرق</sys:String>
+    <sys:String x:Key="CloseDay">دن بند کریں</sys:String>
+    <sys:String x:Key="DayClosedMsg">دن بند ہو گیا۔</sys:String>
+    <sys:String x:Key="AlreadyClosedMsg">یہ دن پہلے ہی بند ہو چکا ہے۔</sys:String>
+    <sys:String x:Key="CountedCashRequiredMsg">براہ کرم گنی ہوئی نقدی لکھیں۔</sys:String>
+    <sys:String x:Key="PrintZReport">زیڈ رپورٹ پرنٹ کریں</sys:String>
+    <sys:String x:Key="ClosingsHistory">پچھلی بندشیں</sys:String>
+    <sys:String x:Key="ClosedBy">بند کرنے والا</sys:String>
+    <sys:String x:Key="SalesByMethod">ادائیگی کے طریقے کے مطابق فروخت</sys:String>
+    <sys:String x:Key="ExpectedCashNote">متوقع نقدی = بل کے وقت وصول نقد فروخت + گاہکوں سے نقد وصولی − سپلائر کو نقد ادائیگی − نقد رقم واپسی۔ ملے جلے طریقے کے بل شامل نہیں (ان کا نقد حصہ الگ درج نہیں ہوتا)۔ دراز میں رکھی اضافی رقم (فلوٹ) بھی شامل نہیں، اس لیے معمولی فرق عام بات ہے۔</sys:String>
+
+    <!-- ===== مرحلہ 3: بل منسوخ کریں ===== -->
+    <sys:String x:Key="CancelBill">بل منسوخ کریں</sys:String>
+    <sys:String x:Key="CancelReason">وجہ</sys:String>
+    <sys:String x:Key="CancelBillConfirmMsg">بل نمبر {0} منسوخ کریں؟ اس کا سارا اسٹاک واپس آ جائے گا اور بل ریکارڈ میں منسوخ شدہ رہے گا۔ یہ عمل واپس نہیں ہو سکتا۔</sys:String>
+    <sys:String x:Key="BillCancelledMsg">بل منسوخ ہو گیا۔ اسٹاک واپس آ گیا ہے۔</sys:String>
+    <sys:String x:Key="CancelReasonRequiredMsg">براہ کرم منسوخی کی وجہ لکھیں۔</sys:String>
+    <sys:String x:Key="BillHasReturnsMsg">اس بل پر واپسی پہلے سے درج ہے۔ یہ بل منسوخ نہیں ہو سکتا۔</sys:String>
+    <sys:String x:Key="BillNotCancellableMsg">یہ بل منسوخ نہیں ہو سکتا (یہ مکمل شدہ بل نہیں ہے)۔</sys:String>
+    <sys:String x:Key="RemoveHeldBill">ہٹا دیں</sys:String>
 </ResourceDictionary>

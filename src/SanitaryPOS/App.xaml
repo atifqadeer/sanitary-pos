@@ -50,6 +50,12 @@
             <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
                 <views:SettingsView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:UsersViewModel}">
+                <views:UsersView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:DayEndViewModel}">
+                <views:DayEndView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:PlaceholderViewModel}">
                 <views:PlaceholderView/>
             </DataTemplate>

@@ -62,6 +62,67 @@ public class DatabaseService
         }
 
         SeedAdminIfNeeded();
+        ApplyMigrations();
+    }
+
+    /// <summary>
+    /// Phase 3 migrations — run on EVERY startup, safe to run any number of
+    /// times. This is how databases created by the Phase 1/2 builds gain the
+    /// new table + settings keys without losing a single bill:
+    /// - day_closings table (CREATE TABLE IF NOT EXISTS — also in schema.sql
+    ///   for brand-new databases, same statement).
+    /// - Phase 3 settings keys with defaults (INSERT OR IGNORE — a value the
+    ///   shop already set is never overwritten).
+    /// - 'admin_default_password' flag: recomputed honestly — it is 1 exactly
+    ///   while the user named 'admin' still verifies against 'admin123'.
+    ///   The MainWindow warning banner reads this flag. Changing the admin
+    ///   password (Users/Settings screen) updates the stored hash, so the
+    ///   next startup — and UserService.RefreshDefaultPasswordFlag right at
+    ///   change time — clears the flag.
+    /// </summary>
+    private void ApplyMigrations()
+    {
+        using var conn = CreateConnection();
+
+        conn.Execute(
+            @"CREATE TABLE IF NOT EXISTS day_closings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                closing_date TEXT NOT NULL UNIQUE,
+                expected_paisa INTEGER NOT NULL DEFAULT 0,
+                counted_paisa INTEGER NOT NULL DEFAULT 0,
+                difference_paisa INTEGER NOT NULL DEFAULT 0,
+                note TEXT,
+                user_id INTEGER REFERENCES users(id),
+                created_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
+              )");
+
+        var defaults = new (string Key, string Value)[]
+        {
+            ("admin_default_password", "0"),
+            ("backup_auto_enabled", "0"),
+            ("backup_time", "21:00"),
+            ("backup_keep_count", "30"),
+            ("last_backup_date", ""),
+            ("last_backup_at", "")
+        };
+        foreach (var (key, value) in defaults)
+        {
+            conn.Execute(
+                "INSERT OR IGNORE INTO settings (key, value) VALUES (@key, @value)",
+                new { key, value });
+        }
+
+        // Recompute the default-password flag from the real hash.
+        string? adminHash = conn.QueryFirstOrDefault<string>(
+            "SELECT password_hash FROM users WHERE username = 'admin'");
+        if (adminHash != null)
+        {
+            string flag = PasswordHasher.Verify("admin123", adminHash) ? "1" : "0";
+            conn.Execute(
+                @"INSERT INTO settings (key, value) VALUES ('admin_default_password', @flag)
+                  ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+                new { flag });
+        }
     }
 
     private static string ReadEmbeddedSchema()
@@ -84,6 +145,12 @@ public class DatabaseService
         conn.Execute(
             "INSERT INTO users (username, password_hash, full_name, role) VALUES (@u, @h, @n, 'Admin')",
             new { u = "admin", h = PasswordHasher.Hash("admin123"), n = "Shop Owner" });
+
+        // The seeded admin starts life on the public default password —
+        // flag it so the shell shows the change-password warning banner.
+        conn.Execute(
+            @"INSERT INTO settings (key, value) VALUES ('admin_default_password', '1')
+              ON CONFLICT(key) DO UPDATE SET value = excluded.value");
     }
 
     /// <summary>Login check used by the Login screen.</summary>
@@ -98,10 +165,21 @@ public class DatabaseService
 
     /// <summary>One-click backup: copy the .db file to the given folder with a dated name.</summary>
     public string BackupTo(string folder)
+        => BackupCopyTo(folder, $"sanitarypos-backup-{DateTime.Now:yyyy-MM-dd-HHmm}.db");
+
+    /// <summary>
+    /// Phase 3: the one file-copy used by every backup path (manual Backup
+    /// Now, scheduled auto-backup, exit catch-up) — callers only choose the
+    /// file name. Auto-backups are named sanitarypos-yyyy-MM-dd-HHmm.db.
+    /// Note: SQLite is in rollback-journal mode here (no WAL files are
+    /// created by this app), so copying the single .db file is a complete
+    /// backup as long as no write transaction is mid-flight — backups run
+    /// on the UI thread between operations, never inside a save.
+    /// </summary>
+    public string BackupCopyTo(string folder, string fileName)
     {
         Directory.CreateDirectory(folder);
-        string dest = Path.Combine(folder,
-            $"sanitarypos-backup-{DateTime.Now:yyyy-MM-dd-HHmm}.db");
+        string dest = Path.Combine(folder, fileName);
         File.Copy(DbPath, dest, overwrite: true);
         return dest;
     }

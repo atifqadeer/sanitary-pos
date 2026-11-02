@@ -325,6 +325,19 @@ public partial class BillingViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Phase 3: remove a held bill from the list. A held bill never touched
+    /// stock or the khata, so SaleService.DeleteHeldSale (which only accepts
+    /// status='Held') is the whole story — no cancel record is needed.
+    /// </summary>
+    [RelayCommand]
+    private void RemoveHeldBill(Sale? held)
+    {
+        if (held == null) return;
+        _sales.DeleteHeldSale(held.Id);
+        HeldBills.Remove(held);
+    }
+
     [RelayCommand]
     private void RecallBill(Sale? held)
     {

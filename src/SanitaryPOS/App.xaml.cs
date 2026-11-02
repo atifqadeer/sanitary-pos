@@ -11,9 +11,14 @@ namespace SanitaryPOS;
 /// apply the saved default language, then show the main window (login first).
 /// No dependency-injection container in Phase 1 — services are plain objects
 /// passed to MainViewModel. Simple over complex.
+/// Phase 3: Initialize() also applies the startup migration (day_closings +
+/// settings defaults); the AutoBackupService timer starts once the window
+/// is up, and OnExit runs one catch-up backup if the day has none.
 /// </summary>
 public partial class App : Application
 {
+    private AutoBackupService? _autoBackup;
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -40,6 +45,11 @@ public partial class App : Application
             var returns = new ReturnService(db, stock);
             var reports = new ReportService(db);
 
+            // Phase 3 services
+            var users = new UserService(db);
+            var dayEnd = new DayEndService(db);
+            _autoBackup = new AutoBackupService(db, settings);
+
             // Language saved in Settings (default_language). Fall back to Urdu,
             // because most counter staff read Urdu better than English.
             string lang = settings.Get("default_language", "ur");
@@ -47,10 +57,15 @@ public partial class App : Application
 
             var mainVm = new MainViewModel(db, settings, session, localization,
                                            products, customers, payments, sales, quotations,
-                                           suppliers, purchases, returns, reports);
+                                           suppliers, purchases, returns, reports,
+                                           users, dayEnd);
             var window = new MainWindow { DataContext = mainVm };
             localization.AttachMainWindow(window);
             window.Show();
+
+            // Start the scheduled auto-backup (immediate catch-up check +
+            // a check every minute). Its failures are swallowed inside.
+            _autoBackup.Start();
         }
         catch (Exception ex)
         {
@@ -58,5 +73,14 @@ public partial class App : Application
                             "Sanitary POS", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown();
         }
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        // One last chance for today's scheduled backup (e.g. the shop closed
+        // before the set backup time). No-op when auto-backup is off or the
+        // day already has its copy.
+        try { _autoBackup?.RunExitCatchUp(); } catch { /* never block exit */ }
+        base.OnExit(e);
     }
 }
